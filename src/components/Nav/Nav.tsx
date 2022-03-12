@@ -100,9 +100,9 @@ const Nav = () => {
           <>
             
             {/* <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}> */}
-              {/* <a className={ classes.brandLink } href="/">Lroad Finance</a> */}
+              {/* <a className={ classes.brandLink } href="/">Lavender Road</a> */}
               <Link to="/" color="inherit" className={classes.brandLink}>
-                <img src={Banner} alt='Lroad Finance Logo' width={376} height={80} style={{verticalAlign:'middle'}}/>
+                <img src={Banner} alt='Lavender Road Logo' width={376} height={80} style={{verticalAlign:'middle'}}/>
               </Link>
 
             <Grid style={{display:'flex', alignItems : 'center'}}>
@@ -156,9 +156,9 @@ const Nav = () => {
             >
               <MenuIcon />
             </IconButton>
-            <img src={Banner} alt='Lroad Finance Logo' width={258} height={55} style={{verticalAlign:'middle'}}/>
+            <img src={Banner} alt='Lavender Road Logo' width={258} height={55} style={{verticalAlign:'middle'}}/>
             {/* <Typography variant="h6" noWrap>
-              Lroad Finance
+              Lavender Road
             </Typography> */}
 
             <Drawer

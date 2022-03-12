@@ -144,7 +144,7 @@ const Home = () => {
         <Grid item xs={12} sm={8}>
           <Paper>
             <Box p={4} style={{paddingBottom: '20px'}}>
-              <h1>Welcome to Lroad Finance</h1>
+              <h1>Welcome to Lavender Road</h1>
               <p>The most sustainable algorithmic stable coin on Fantom Opera, pegged to the price of 1 FTM via seigniorage.</p>
               <p>
                 Stake your LROAD-FTM LP in the Farm to earn LCREAM rewards.

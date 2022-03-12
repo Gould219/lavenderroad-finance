@@ -15,7 +15,7 @@ import moment from 'moment';
 import { parseUnits } from 'ethers/lib/utils';
 import { FTM_TICKER, SPOOKY_ROUTER_ADDR, TOMB_TICKER } from '../utils/constants';
 /**
- * An API module of Lroad Finance contracts.
+ * An API module of Lavender Road contracts.
  * All contract-interacting domain logic should be defined in here.
  */
 export class TombFinance {
