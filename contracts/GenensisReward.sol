@@ -667,9 +667,10 @@ contract LroadGenesisRewardPool {
         }
     }
 
-    function addWhiteLists(address _account, bool value) public onlyOperator {
-        require(whiteListed[_account] != value, "IfGenesisPool::excludeFromFees: Account is already the value of 'value'");
-        whiteListed[_account] = value;
+    function addMultipleAccountsToWhiteList(address[] calldata _accounts, bool _value) public onlyOperator {
+        for(uint256 i = 0; i < _accounts.length; i++) {
+            whiteListed[_accounts[i]] = _value;
+        }
     }
 
     function addWhiteList(address _account) public onlyOperator {
@@ -785,7 +786,7 @@ contract LroadGenesisRewardPool {
     // Deposit LP tokens.
     function deposit(uint256 _pid, uint256 _amount) public {
         address _sender = msg.sender;
-        if( block.timestamp.sub(poolStartTime) < whiteListPeriod ) {
+        if( block.timestamp < poolStartTime.add(whiteListPeriod) ) {
             require(whiteListed[_sender], 'You are not whitelisted');
         }
         PoolInfo storage pool = poolInfo[_pid];

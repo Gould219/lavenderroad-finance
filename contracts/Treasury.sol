@@ -919,7 +919,7 @@ contract Treasury is ContractGuard {
 
     // exclusions from total supply
     address[] public excludedFromTotalSupply = [
-        address(0x79FF803a4AC32960f8Eaba1d55086864505FBFe0) // LroadGenesisPool
+        address(0x4EA544b72418ec4503A425AB3844F26F70798358) // LroadGenesisPool
     ];
 
     // core components
