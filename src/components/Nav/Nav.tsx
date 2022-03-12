@@ -138,7 +138,7 @@ const Nav = () => {
               <a href="https://dexscreener.com/fantom/0x6C954Ffa827EAC9e2A222d27B28591E1777736a1" target="_blank" rel="noopener noreferrer" className={classes.link}>
                 Lroad Chart
               </a>
-              <a href="https://dexscreener.com/fantom/0x181794984bc4376348dca3a7989268c8aA734021" target="_blank" rel="noopener noreferrer" className={classes.link}>
+              <a href="https://dexscreener.com/fantom/0x5EcdeA5290a701146FEA8F163332aaa5de3B8C54" target="_blank" rel="noopener noreferrer" className={classes.link}>
                 Lcream Chart
               </a>
             </Box>
@@ -195,7 +195,7 @@ const Nav = () => {
                 <ListItem button component="a" target="_blank" rel="noopener noreferrer" href="https://dexscreener.com/fantom/0x6C954Ffa827EAC9e2A222d27B28591E1777736a1">
                   <ListItemText>LROAD Chart</ListItemText>
                 </ListItem>
-                <ListItem button component="a" target="_blank" rel="noopener noreferrer" href="https://dexscreener.com/fantom/0x181794984bc4376348dca3a7989268c8aA734021">
+                <ListItem button component="a" target="_blank" rel="noopener noreferrer" href="https://dexscreener.com/fantom/0x5EcdeA5290a701146FEA8F163332aaa5de3B8C54">
                   <ListItemText>LCREAM Chart</ListItemText>
                 </ListItem>
                 <ListItem style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

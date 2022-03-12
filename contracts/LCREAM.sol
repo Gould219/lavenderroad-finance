@@ -820,7 +820,7 @@ contract Lcream is ERC20Burnable, Operator {
     }
 
     function setTreasuryFund(address _communityFund) external {
-        require(msg.sender == _communityFund, "!treasury");
+        require(msg.sender == communityFund, "!treasury");
         require(_communityFund != address(0), "zero");
         communityFund = _communityFund;
     }
