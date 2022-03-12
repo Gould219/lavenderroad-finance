@@ -919,13 +919,13 @@ contract Treasury is ContractGuard {
 
     // exclusions from total supply
     address[] public excludedFromTotalSupply = [
-        address(0x2e3ed9c3daA3a0fA4111236A8F29dfE17cBA8222) // LroadGenesisPool
+        address(0x79FF803a4AC32960f8Eaba1d55086864505FBFe0) // LroadGenesisPool
     ];
 
     // core components
     address public lroad;
     address public lburger;
-    address public shield;
+    address public lcream;
 
     address public boardroom;
     address public lroadOracle;
@@ -1001,7 +1001,7 @@ contract Treasury is ContractGuard {
         require(
             IBasisAsset(lroad).operator() == address(this) &&
                 IBasisAsset(lburger).operator() == address(this) &&
-                IBasisAsset(shield).operator() == address(this) &&
+                IBasisAsset(lcream).operator() == address(this) &&
                 Operator(boardroom).operator() == address(this),
             "Treasury: need more permission"
         );
@@ -1113,14 +1113,14 @@ contract Treasury is ContractGuard {
     function initialize(
         address _lroad,
         address _lburger,
-        address _shield,
+        address _lcream,
         address _lroadOracle,
         address _boardroom,
         uint256 _startTime
     ) public notInitialized {
         lroad = _lroad;
         lburger = _lburger;
-        shield = _shield;
+        lcream = _lcream;
         lroadOracle = _lroadOracle;
         boardroom = _boardroom;
         startTime = _startTime;
@@ -1420,7 +1420,7 @@ contract Treasury is ContractGuard {
         // do not allow to drain core tokens
         require(address(_token) != address(lroad), "lroad");
         require(address(_token) != address(lburger), "bond");
-        require(address(_token) != address(shield), "shield");
+        require(address(_token) != address(lcream), "lcream");
         _token.safeTransfer(_to, _amount);
     }
 

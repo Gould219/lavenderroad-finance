@@ -41,6 +41,6 @@ const StyledCardContentInner = styled.div`
 `;
 
 const StyledCard =  styled(Card)`
-  height: 165px;
+  height: 155px;
 `;
 export default ExchangeStat;

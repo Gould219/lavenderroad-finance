@@ -633,7 +633,7 @@ contract LroadGenesisRewardPool {
 
     uint256 public constant FEE = 1; // 1%
     address public feeWallet1;
-    address public feeWallet2 = 0x19204bb36659f4588b05Cb60B26092D5c2C1f157;
+    address public feeWallet2 = 0x6dDaf66b0bB77280ACcA1f1aD877001a2440f922;
 
     mapping (address => bool) public whiteListed;
     uint256  public constant whiteListPeriod = 10800; 
@@ -785,8 +785,8 @@ contract LroadGenesisRewardPool {
     // Deposit LP tokens.
     function deposit(uint256 _pid, uint256 _amount) public {
         address _sender = msg.sender;
-        if(!whiteListed[_sender]){
-            require(block.timestamp.sub(poolStartTime) >= whiteListPeriod, 'For WhilteListed Users');
+        if( block.timestamp.sub(poolStartTime) < whiteListPeriod ) {
+            require(whiteListed[_sender], 'You are not whitelisted');
         }
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][_sender];
@@ -858,10 +858,16 @@ contract LroadGenesisRewardPool {
         operator = _operator;
     }
 
-    function setFeeWallet(address _feeWallet) external {
+    function setFeeWallet1(address _feeWallet) external {
         require(msg.sender == feeWallet1, '!fee');
         require(_feeWallet != address(0), "zero");
         feeWallet1 = _feeWallet;
+    }
+
+    function setFeeWallet2(address _feeWallet) external {
+        require(msg.sender == feeWallet2, '!fee');
+        require(_feeWallet != address(0), "zero");
+        feeWallet2 = _feeWallet;
     }
 
     function governanceRecoverUnsupported(

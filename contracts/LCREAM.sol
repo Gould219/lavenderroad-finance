@@ -778,13 +778,13 @@ contract Operator is Context, Ownable {
 
 pragma solidity 0.6.12;
 
-contract Shield is ERC20Burnable, Operator {
+contract Lcream is ERC20Burnable, Operator {
     using SafeMath for uint256;
 
-    // TOTAL MAX SUPPLY = 70,000 Shields
-    uint256 public constant FARMING_POOL_REWARD_ALLOCATION = 65000 ether;
-    uint256 public constant COMMUNITY_FUND_POOL_ALLOCATION = 4499 ether;
-    uint256 public constant DEV_FUND_POOL_ALLOCATION = 500 ether;
+    // TOTAL MAX SUPPLY = 70,000 Lcreams
+    uint256 public constant FARMING_POOL_REWARD_ALLOCATION = 59500 ether;
+    uint256 public constant COMMUNITY_FUND_POOL_ALLOCATION = 5500 ether;
+    uint256 public constant DEV_FUND_POOL_ALLOCATION = 4999 ether;
 
     uint256 public constant VESTING_DURATION = 180 days;
     uint256 public startTime;
@@ -800,7 +800,7 @@ contract Shield is ERC20Burnable, Operator {
 
     bool public rewardPoolDistributed = false;
 
-    constructor(uint256 _startTime, address _communityFund, address _devFund) public ERC20("SHIELD", "SHIELD") {
+    constructor(uint256 _startTime, address _communityFund, address _devFund) public ERC20("LCREAM", "LCREAM") {
         _mint(msg.sender, 1 ether); // mint 1 LROAD Share for initial pools deployment
 
         startTime = _startTime;

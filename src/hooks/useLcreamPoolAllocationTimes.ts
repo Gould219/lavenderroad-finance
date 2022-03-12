@@ -4,7 +4,7 @@ import { AllocationTime } from '../tomb-finance/types';
 import useRefresh from './useRefresh';
 
 
-const useShieldPoolAllocationTimes = () => {
+const useLcreamPoolAllocationTimes = () => {
   const { slowRefresh } = useRefresh();
   const [time, setTime] = useState<AllocationTime>({
     from: new Date(),
@@ -13,10 +13,10 @@ const useShieldPoolAllocationTimes = () => {
   const tombFinance = useTombFinance();
   useEffect(() => {
     if (tombFinance) {
-      tombFinance.getShieldPoolStartAndEndTime().then(setTime);
+      tombFinance.getLcreamPoolStartAndEndTime().then(setTime);
     }
   }, [tombFinance, slowRefresh]);
   return time;
 };
 
-export default useShieldPoolAllocationTimes;
+export default useLcreamPoolAllocationTimes;

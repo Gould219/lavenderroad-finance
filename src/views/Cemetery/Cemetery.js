@@ -9,7 +9,7 @@ import UnlockWallet from '../../components/UnlockWallet';
 import Page from '../../components/Page';
 import CemeteryCard from './CemeteryCard';
 import useGenesisPoolAllocationTimes from '../../hooks/useGenesisPoolAllocationTimes';
-import useShieldPoolAllocationTimes from '../../hooks/useShieldPoolAllocationTimes';
+import useLcreamPoolAllocationTimes from '../../hooks/useLcreamPoolAllocationTimes';
 import ProgressCountdown from './ProgressCountdown';
 import CemeteryImage from '../../assets/img/cemetery.png';
 import { createGlobalStyle } from 'styled-components';
@@ -28,7 +28,7 @@ const Cemetery = () => {
   const { path } = useRouteMatch();
   const { account } = useWallet();
   const { from, to } = useGenesisPoolAllocationTimes();
-  const { from:mfrom } = useShieldPoolAllocationTimes();
+  const { from:mfrom } = useLcreamPoolAllocationTimes();
   const isOver = Date.now() >= to.getTime();
   const isStart = Date.now() >= mfrom.getTime();
   const activeBanks = banks.filter((bank) => !bank.finished);
@@ -40,20 +40,20 @@ const Cemetery = () => {
           {!!account ? (
             <Container maxWidth="lg">
               <Typography color="textPrimary" align="center" variant="h3" gutterBottom>
-                Fortress
+                Farms
               </Typography>
 
               <Box mt={5}>
                 <div hidden={activeBanks.filter((bank) => bank.sectionInUI === 2).length === 0}>
                   <Typography color="textPrimary" variant="h4" gutterBottom>
-                    Earn SHIELD by staking LP
+                    Earn LCREAM by staking LP
                   </Typography>
-                  <Alert variant="filled" style={{background: '#664b55', padding:'12px 20px', fontSize:'18px'}}>
+                  <Alert variant="filled" style={{background: '#963d9f', padding:'12px 20px', fontSize:'16px'}}>
                     {isStart ? 
-                      <div>Pools are live now, Stake LPs to earn more SHIELD, No deposit fee</div> : 
+                      <div>Pools are live now, Stake LPs to earn more LCREAM, No deposit fee</div> : 
                       <>
                         Pools starting at {mfrom.toUTCString()}, No deposit fee.<br/>
-                        <div style={{display:'flex'}}>Shield reward pools start in: <ProgressCountdown base={moment().toDate()} hideBar={true} deadline={mfrom} description="End Pool" />.</div>
+                        <div style={{display:'flex'}}>Lcream reward pools start in: <ProgressCountdown base={moment().toDate()} hideBar={true} deadline={mfrom} description="End Pool" />.</div>
                       </>
                     }
                   </Alert>
@@ -72,7 +72,7 @@ const Cemetery = () => {
                   <Typography color="textPrimary" variant="h4" gutterBottom style={{ marginTop: '20px' }}>
                     Earn LROAD by staking LP
                   </Typography>
-                  <Alert variant="filled" severity="warning" style={{background: '#664b55'}}>
+                  <Alert variant="filled" severity="warning" style={{background: '#963d9f'}}>
                     All below pools have ended. Please unstake and collect your rewards.
                   </Alert>
                   <Grid container spacing={3} style={{ marginTop: '20px' }}>
@@ -90,7 +90,7 @@ const Cemetery = () => {
                   <Typography color="textPrimary" variant="h4" gutterBottom style={{ marginTop: '20px' }}>
                     Genesis Pools
                   </Typography>
-                  <Alert variant="filled" severity={isOver ? 'info' : 'success'} style={{background: '#664b55', padding:'12px 20px', fontSize:'18px'}}>
+                  <Alert variant="filled" severity={isOver ? 'info' : 'success'} style={{background: '#963d9f', padding:'12px 20px', fontSize:'16px'}}>
                     {isOver ? 
                       <div>All below pools have ended. Please unstake and collect your rewards.</div> : 
                       <>

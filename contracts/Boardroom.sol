@@ -610,7 +610,7 @@ contract ShareWrapper {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
-    IERC20 public shield;
+    IERC20 public lcream;
 
     uint256 private _totalSupply;
     mapping(address => uint256) private _balances;
@@ -626,7 +626,7 @@ contract ShareWrapper {
     function stake(uint256 amount) public virtual {
         _totalSupply = _totalSupply.add(amount);
         _balances[msg.sender] = _balances[msg.sender].add(amount);
-        shield.safeTransferFrom(msg.sender, address(this), amount);
+        lcream.safeTransferFrom(msg.sender, address(this), amount);
     }
 
     function withdraw(uint256 amount) public virtual {
@@ -634,7 +634,7 @@ contract ShareWrapper {
         require(boardroomShare >= amount, "Boardroom: withdraw request greater than staked amount");
         _totalSupply = _totalSupply.sub(amount);
         _balances[msg.sender] = boardroomShare.sub(amount);
-        shield.safeTransfer(msg.sender, amount);
+        lcream.safeTransfer(msg.sender, amount);
     }
 }
 
@@ -714,11 +714,11 @@ contract Boardroom is ShareWrapper, ContractGuard {
 
     function initialize(
         IERC20 _lroad,
-        IERC20 _shield,
+        IERC20 _lcream,
         ITreasury _treasury
     ) public notInitialized {
         lroad = _lroad;
-        shield = _shield;
+        lcream = _lcream;
         treasury = _treasury;
         BoardroomSnapshot memory genesisSnapshot = BoardroomSnapshot({time : block.number, rewardReceived : 0, rewardPerShare : 0});
         boardroomHistory.push(genesisSnapshot);
@@ -848,7 +848,7 @@ contract Boardroom is ShareWrapper, ContractGuard {
     function governanceRecoverUnsupported(IERC20 _token, uint256 _amount, address _to) external onlyOperator {
         // do not allow to drain core tokens
         require(address(_token) != address(lroad), "lroad");
-        require(address(_token) != address(shield), "shield");
+        require(address(_token) != address(lcream), "lcream");
         _token.safeTransfer(_to, _amount);
     }
 }

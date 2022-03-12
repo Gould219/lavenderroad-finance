@@ -11,13 +11,13 @@ const useEstimateTShare = (tbondAmount: string) => {
 
   const estimateAmountOfTShare = useCallback(async () => {
     const tbondAmountBn = parseUnits(tbondAmount);
-    const amount = await tombFinance.estimateAmountOfShield(tbondAmountBn.toString());
+    const amount = await tombFinance.estimateAmountOfLcream(tbondAmountBn.toString());
     setEstimateAmount(amount);
   }, [account]);
 
   useEffect(() => {
     if (account) {
-      estimateAmountOfTShare().catch((err) => console.error(`Failed to get estimateAmountOfShield: ${err.stack}`));
+      estimateAmountOfTShare().catch((err) => console.error(`Failed to get estimateAmountOfLcream: ${err.stack}`));
     }
   }, [account, estimateAmountOfTShare]);
 

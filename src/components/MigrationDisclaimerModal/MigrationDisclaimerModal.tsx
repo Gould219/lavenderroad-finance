@@ -23,8 +23,8 @@ const MigrationDisclaimerModal: React.FC<MigrationDisclaimerModalProps> = ({ onC
       <ModalTitle text={`Migration Disclaimer`} />
       <div>
         <StyledText>
-          Due to the upgrade, all Aegis functionalities other than [Settle and withdraw] has been disabled for users
-          who staked in legacy Aegis. Please withdraw all balances from the previous Aegis after the update.
+          Due to the upgrade, all Boardroom functionalities other than [Settle and withdraw] has been disabled for users
+          who staked in legacy Boardroom. Please withdraw all balances from the previous Boardroom after the update.
         </StyledText>
       </div>
       <ModalActions>

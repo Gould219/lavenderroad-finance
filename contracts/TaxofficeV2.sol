@@ -622,7 +622,7 @@ pragma solidity 0.6.12;
 contract TaxOfficeV2 is Operator {
     using SafeMath for uint256;
 
-    address public lroad = address(0xdDC1006Bc16e5a36Abc8D6bDD736367337a799FA);
+    address public lroad = address(0x6C954Ffa827EAC9e2A222d27B28591E1777736a1);
     address public wftm = address(0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83);
     address public uniRouter = address(0xF491e7B69E4244ad4002BC14e878a34207E38c29);
 

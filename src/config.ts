@@ -13,11 +13,12 @@ const configurations: { [env: string]: Configuration } = {
     externalTokens: {
       WFTM: ['0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83', 18],
       USDC: ['0x04068DA6C83AFCFA0e13ba15A6696662335D5B75', 6], // This is actually usdc on mainnet not fusdt
-      ETH: ['0x74b23882a30290451A17c44f4F05243b6b58C76d', 18],
+      fUSDT: ['0x049d68029688eAbF473097a2fC38ef61633A3C7A', 6],
+      DAI: ['0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E', 18],
       'USDT-FTM-LP': ['0x2b4C76d0dc16BE1C31D4C1DC53bF9B45987Fc75c', 18],
-      'LROAD-FTM-LP': ['0xBdEAD8F7292ee4782B24C65e2a3232376a06873E', 18],
-      'SHIELD-FTM-LP': ['0x2b2877608A80773e1b8f79fD8a5066C558e862e0', 18],
-      // 'LROAD-SHIELD-LP': ['0x1083A13213927Eb807C4BAE970E7E57a1E1b77B7', 18],
+      'LROAD-FTM-LP': ['0x5d71CC8C9a0427A47FE1dbd762eB051364c16636', 18],
+      'LCREAM-FTM-LP': ['0x0244e0c6b8054d52d15B3c9179b2E348DAE7635b', 18],
+      // 'LROAD-LCREAM-LP': ['0x1083A13213927Eb807C4BAE970E7E57a1E1b77B7', 18],
     },
     baseLaunchDate: new Date('2022-02-21 14:00:00Z'),
     bondLaunchesAt: new Date('2022-02-21T14:00:00Z'),
@@ -33,11 +34,12 @@ const configurations: { [env: string]: Configuration } = {
     externalTokens: {
       WFTM: ['0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83', 18],
       USDC: ['0x04068DA6C83AFCFA0e13ba15A6696662335D5B75', 6], // This is actually usdc on mainnet not fusdt
-      ETH: ['0x74b23882a30290451A17c44f4F05243b6b58C76d', 18],
+      fUSDT: ['0x049d68029688eAbF473097a2fC38ef61633A3C7A', 6],
+      DAI: ['0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E', 18],
       'USDT-FTM-LP': ['0x2b4C76d0dc16BE1C31D4C1DC53bF9B45987Fc75c', 18],
-      'LROAD-FTM-LP': ['0xBdEAD8F7292ee4782B24C65e2a3232376a06873E', 18],
-      'SHIELD-FTM-LP': ['0x2b2877608A80773e1b8f79fD8a5066C558e862e0', 18],
-      // 'LROAD-SHIELD-LP': ['0x1083A13213927Eb807C4BAE970E7E57a1E1b77B7', 18],
+      'LROAD-FTM-LP': ['0x5d71CC8C9a0427A47FE1dbd762eB051364c16636', 18],
+      'LCREAM-FTM-LP': ['0x0244e0c6b8054d52d15B3c9179b2E348DAE7635b', 18],
+      // 'LROAD-LCREAM-LP': ['0x1083A13213927Eb807C4BAE970E7E57a1E1b77B7', 18],
     },
     baseLaunchDate: new Date('2022-02-21 14:00:00Z'),
     bondLaunchesAt: new Date('2022-02-21T14:00:00Z'),
@@ -54,7 +56,7 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
   sectionInUI: way to distinguish in which of the 3 pool groups it should be listed
         - 0 = Single asset stake pools
         - 1 = LP asset staking rewarding LROAD
-        - 2 = LP asset staking rewarding SHIELD
+        - 2 = LP asset staking rewarding LCREAM
   contract: the contract name which will be loaded from the deployment.environmnet.json
   depositTokenName : the name of the token to be deposited
   earnTokenName: the rewarded token
@@ -83,46 +85,57 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     sort: 2,
     closedForStaking: false,
   },
-  LroadethRewardPool: {
-    name: 'Earn LROAD by ETH',
+  LroadfusdtRewardPool: {
+    name: 'Earn LROAD by fUSDT',
     poolId: 2,
     sectionInUI: 0,
-    contract: 'LroadethGenesisRewardPool',
-    depositTokenName: 'ETH',
+    contract: 'LroadfusdtGenesisRewardPool',
+    depositTokenName: 'fUSDT',
+    earnTokenName: 'LROAD',
+    finished: false,
+    sort: 3,
+    closedForStaking: false,
+  },
+  LroaddaiRewardPool: {
+    name: 'Earn LROAD by DAI',
+    poolId: 3,
+    sectionInUI: 0,
+    contract: 'LroaddaiGenesisRewardPool',
+    depositTokenName: 'DAI',
     earnTokenName: 'LROAD',
     finished: false,
     sort: 4,
     closedForStaking: false,
   },
-  LroadFtmLPShieldRewardPool: {
-    name: 'Earn SHIELD by LROAD-FTM LP',
+  LroadFtmLPLcreamRewardPool: {
+    name: 'Earn LCREAM by LROAD-FTM LP',
     poolId: 0,
     sectionInUI: 2,
-    contract: 'LroadFtmLPShieldRewardPool',
+    contract: 'LroadFtmLPLcreamRewardPool',
     depositTokenName: 'LROAD-FTM-LP',
-    earnTokenName: 'SHIELD',
+    earnTokenName: 'LCREAM',
     finished: false,
     sort: 5,
     closedForStaking: false,
   },
-  ShieldFtmLPShieldRewardPool: {
-    name: 'Earn SHIELD by SHIELD-FTM LP',
+  LcreamFtmLPLcreamRewardPool: {
+    name: 'Earn LCREAM by LCREAM-FTM LP',
     poolId: 1,
     sectionInUI: 2,
-    contract: 'ShieldFtmLPShieldRewardPool',
-    depositTokenName: 'SHIELD-FTM-LP',
-    earnTokenName: 'SHIELD',
+    contract: 'LcreamFtmLPLcreamRewardPool',
+    depositTokenName: 'LCREAM-FTM-LP',
+    earnTokenName: 'LCREAM',
     finished: false,
     sort: 6,
     closedForStaking: false,
   },
-  // LroadShieldLPShieldRewardPool: {
-  //   name: 'Earn SHIELD by LROAD-SHIELD LP',
+  // LroadLcreamLPLcreamRewardPool: {
+  //   name: 'Earn LCREAM by LROAD-LCREAM LP',
   //   poolId: 2,
   //   sectionInUI: 2,
-  //   contract: 'LroadShieldLPShieldRewardPool',
-  //   depositTokenName: 'LROAD-SHIELD-LP',
-  //   earnTokenName: 'SHIELD',
+  //   contract: 'LroadLcreamLPLcreamRewardPool',
+  //   depositTokenName: 'LROAD-LCREAM-LP',
+  //   earnTokenName: 'LCREAM',
   //   finished: false,
   //   sort: 7,
   //   closedForStaking: false,

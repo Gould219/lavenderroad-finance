@@ -15,7 +15,7 @@ const AccountModal: React.FC<ModalProps> = ({ onDismiss }) => {
   const tombBalance = useTokenBalance(tombFinance.LROAD);
   const displayTombBalance = useMemo(() => getDisplayBalance(tombBalance), [tombBalance]);
 
-  const tshareBalance = useTokenBalance(tombFinance.SHIELD);
+  const tshareBalance = useTokenBalance(tombFinance.LCREAM);
   const displayTshareBalance = useMemo(() => getDisplayBalance(tshareBalance), [tshareBalance]);
 
   const tbondBalance = useTokenBalance(tombFinance.LBURGER);
@@ -35,10 +35,10 @@ const AccountModal: React.FC<ModalProps> = ({ onDismiss }) => {
         </StyledBalanceWrapper>
 
         <StyledBalanceWrapper>
-          <TokenSymbol symbol="SHIELD" />
+          <TokenSymbol symbol="LCREAM" />
           <StyledBalance>
             <StyledValue>{displayTshareBalance}</StyledValue>
-            <Label text="SHIELD Available" />
+            <Label text="LCREAM Available" />
           </StyledBalance>
         </StyledBalanceWrapper>
 

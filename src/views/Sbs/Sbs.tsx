@@ -53,13 +53,13 @@ const Sbs: React.FC = () => {
     }
     if (!isNumeric(e.currentTarget.value)) return;
     setTbondAmount(e.currentTarget.value);
-    const updateTShareAmount = await tombFinance.estimateAmountOfShield(e.currentTarget.value);
+    const updateTShareAmount = await tombFinance.estimateAmountOfLcream(e.currentTarget.value);
     setTshareAmount(updateTShareAmount);  
   };
 
   const handleTBondSelectMax = async () => {
     setTbondAmount(String(bondBalance));
-    const updateTShareAmount = await tombFinance.estimateAmountOfShield(String(bondBalance));
+    const updateTShareAmount = await tombFinance.estimateAmountOfLcream(String(bondBalance));
     setTshareAmount(updateTShareAmount); 
   };
 
@@ -91,7 +91,7 @@ const Sbs: React.FC = () => {
         {!!account ? (
           <>
             <Route exact path={path}>
-              <PageHeader icon={'🏦'} title="Lburger -> Shield Swap" subtitle="Swap Lburger to Shield" />
+              <PageHeader icon={'🏦'} title="Lburger -> Lcream Swap" subtitle="Swap Lburger to Lcream" />
             </Route>
             <Box mt={5}>
               <Grid container justifyContent="center" spacing={6}>
@@ -128,11 +128,11 @@ const Sbs: React.FC = () => {
                       <Card>
                         <CardContent>
                           <StyledCardContentInner>
-                            <StyledCardTitle>Shield</StyledCardTitle>
+                            <StyledCardTitle>Lcream</StyledCardTitle>
                             <StyledExchanger>
                               <StyledToken>
                                 <StyledCardIcon>
-                                  <TokenSymbol symbol={tombFinance.SHIELD.symbol} size={54} />
+                                  <TokenSymbol symbol={tombFinance.LCREAM.symbol} size={54} />
                                 </StyledCardIcon>
                               </StyledToken>
                             </StyledExchanger>
@@ -142,10 +142,10 @@ const Sbs: React.FC = () => {
                                 onChange={handleTShareChange}
                                 value={tshareAmount}
                                 max={tshareBalance}
-                                symbol="Shield"
+                                symbol="Lcream"
                               ></TokenInput>
                             </Grid>
-                            <StyledDesc>{`${tshareBalance} SHIELD Available in Swapper`}</StyledDesc>
+                            <StyledDesc>{`${tshareBalance} LCREAM Available in Swapper`}</StyledDesc>
                           </StyledCardContentInner>
                         </CardContent>
                       </Card>

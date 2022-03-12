@@ -26,7 +26,7 @@ const AccountButton: React.FC<AccountButtonProps> = ({ text }) => {
   const buttonText = text ? text : 'Unlock';
 
   return (
-    <div style={{paddingTop:'15px'}}>
+    <div>
       {!account ? (
         <Button onClick={handleWalletProviderOpen} color="primary" variant="contained">
           {buttonText}

@@ -10,7 +10,7 @@ const CardIcon: React.FC<CardIconProps> = ({ children }) => <StyledCardIcon>{chi
 const StyledCardIcon = styled.div`
   // background-color: ${(props) => props.theme.color.white};
   font-size: 36px;
-  height: 195px;
+  height: 130px;
   width: 95px;
   border-radius: 40px;
   align-items: center;

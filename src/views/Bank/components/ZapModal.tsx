@@ -29,14 +29,14 @@ const ZapModal: React.FC<ZapProps> = ({ onConfirm, onDismiss, tokenName = '', de
   const { balance } = useWallet();
   const ftmBalance = (Number(balance) / 1e18).toFixed(4).toString();
   const tombBalance = useTokenBalance(tombFinance.LROAD);
-  const tshareBalance = useTokenBalance(tombFinance.SHIELD);
+  const tshareBalance = useTokenBalance(tombFinance.LCREAM);
   const [val, setVal] = useState('');
   const [zappingToken, setZappingToken] = useState(FTM_TICKER);
   const [zappingTokenBalance, setZappingTokenBalance] = useState(ftmBalance);
   const [estimate, setEstimate] = useState({ token0: '0', token1: '0' }); // token0 will always be FTM in this case
   const [approveZapperStatus, approveZapper] = useApproveZapper(zappingToken);
   const tombFtmLpStats = useLpStats('LROAD-FTM-LP');
-  const tShareFtmLpStats = useLpStats('SHIELD-FTM-LP');
+  const tShareFtmLpStats = useLpStats('LCREAM-FTM-LP');
   const tombLPStats = useMemo(() => (tombFtmLpStats ? tombFtmLpStats : null), [tombFtmLpStats]);
   const tshareLPStats = useMemo(() => (tShareFtmLpStats ? tShareFtmLpStats : null), [tShareFtmLpStats]);
   const ftmAmountPerLP = tokenName.startsWith(TOMB_TICKER) ? tombLPStats?.ftmAmount : tshareLPStats?.ftmAmount;
@@ -88,18 +88,18 @@ const ZapModal: React.FC<ZapProps> = ({ onConfirm, onDismiss, tokenName = '', de
       </Typography>
 
       <StyledActionSpacer />
-      <InputLabel style={{ color: '#3e2e34' }} id="label">
+      <InputLabel style={{ color: '#d151de' }} id="label">
         Select asset to zap with
       </InputLabel>
       <Select
         onChange={handleChangeAsset}
-        style={{ color: '#3e2e34' }}
+        style={{ color: '#d151de' }}
         labelId="label"
         id="select"
         value={zappingToken}
       >
         <StyledMenuItem value={FTM_TICKER}>FTM</StyledMenuItem>
-        <StyledMenuItem value={TSHARE_TICKER}>SHIELD</StyledMenuItem>
+        <StyledMenuItem value={TSHARE_TICKER}>LCREAM</StyledMenuItem>
         {/* Tomb as an input for zapping will be disabled due to issues occuring with the Gatekeeper system */}
         {/* <StyledMenuItem value={TOMB_TICKER}>TOMB</StyledMenuItem> */}
       </Select>
@@ -157,10 +157,10 @@ const StyledDescriptionText = styled.div`
 const StyledMenuItem = withStyles({
   root: {
     backgroundColor: 'white',
-    color: '#3e2e34',
+    color: '#d151de',
     '&:hover': {
       backgroundColor: 'grey',
-      color: '#3e2e34',
+      color: '#d151de',
     },
     selected: {
       backgroundColor: 'black',

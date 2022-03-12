@@ -103,18 +103,18 @@ const Bank: React.FC = () => {
 const LPTokenHelpText: React.FC<{ bank: BankEntity }> = ({ bank }) => {
   const tombFinance = useTombFinance();
   const tombAddr = tombFinance.LROAD.address;
-  const tshareAddr = tombFinance.SHIELD.address;
+  const tshareAddr = tombFinance.LCREAM.address;
 
   let pairName: string;
   let uniswapUrl: string;
   if (bank.depositTokenName.includes('LROAD-FTM')) {
     pairName = 'LROAD-FTM pair';
     uniswapUrl = 'https://spookyswap.finance/add/FTM/' + tombAddr;
-  } else if (bank.depositTokenName.includes('SHIELD-FTM')){
-    pairName = 'SHIELD-FTM pair';
+  } else if (bank.depositTokenName.includes('LCREAM-FTM')){
+    pairName = 'LCREAM-FTM pair';
     uniswapUrl = 'https://spookyswap.finance/add/FTM/' + tshareAddr;
   } else {
-    pairName = 'LROAD-SHIELD pair';
+    pairName = 'LROAD-LCREAM pair';
     uniswapUrl = 'https://spookyswap.finance/add/' + tombAddr + '/' + tshareAddr;
   }
   return (

@@ -4,9 +4,8 @@ import Page from '../../components/Page';
 import HomeImage from '../../assets/img/home.png';
 import CashImage from '../../assets/img/crypto_tomb_cash.svg';
 import Image from 'material-ui-image';
-import styled from 'styled-components';
 import { Alert } from '@material-ui/lab';
-import { useMediaQuery } from '@material-ui/core';
+// import { useMediaQuery } from '@material-ui/core';
 import { createGlobalStyle } from 'styled-components';
 import CountUp from 'react-countup';
 import CardIcon from '../../components/CardIcon';
@@ -19,7 +18,7 @@ import useBondStats from '../../hooks/useBondStats';
 import usetShareStats from '../../hooks/usetShareStats';
 import useTotalValueLocked from '../../hooks/useTotalValueLocked';
 import useGenesisPoolAllocationTimes from '../../hooks/useGenesisPoolAllocationTimes';
-import useShieldPoolAllocationTimes from '../../hooks/useShieldPoolAllocationTimes';
+import useLcreamPoolAllocationTimes from '../../hooks/useLcreamPoolAllocationTimes';
 import ProgressCountdown from '../Cemetery/ProgressCountdown';
 
 import { tomb as tombTesting, tShare as tShareTesting } from '../../tomb-finance/deployments/deployments.testing.json';
@@ -27,7 +26,6 @@ import { tomb as tombProd, tShare as tShareProd } from '../../tomb-finance/deplo
 import MetamaskFox from '../../assets/img/metamask-fox.svg';
 import TwitterImage from '../../assets/img/twitter.svg';
 import DiscordImage from '../../assets/img/discord.svg';
-import TelegramImage from '../../assets/img/telegram.svg';
 
 import { Box, Button, Card, CardContent, Grid, Paper } from '@material-ui/core';
 import ZapModal from '../Bank/components/ZapModal';
@@ -40,23 +38,19 @@ const BackgroundImage = createGlobalStyle`
     background: url(${HomeImage}) no-repeat !important;
     background-size: cover !important;
   }
-  p, b, span {
-    font-size: 18px;
-  }
 `;
 
 
 const Home = () => {
-  const matches = useMediaQuery('(min-width:1175px)');
   const TVL = useTotalValueLocked();
   const tombFtmLpStats = useLpStats('LROAD-FTM-LP');
-  const tShareFtmLpStats = useLpStats('SHIELD-FTM-LP');
+  const tShareFtmLpStats = useLpStats('LCREAM-FTM-LP');
   const tombStats = useTombStats();
   const tShareStats = usetShareStats();
   const tBondStats = useBondStats();
   const tombFinance = useTombFinance();
   const { from, to } = useGenesisPoolAllocationTimes();
-  const { from: mfrom, to: mto } = useShieldPoolAllocationTimes();
+  const { from: mfrom, to: mto } = useLcreamPoolAllocationTimes();
   const isStart = Date.now() >= from.getTime();
   const isOver = Date.now() >= to.getTime();
   const isMStart = Date.now() >= mfrom.getTime();
@@ -111,12 +105,7 @@ const Home = () => {
   const tBondTotalSupply = useMemo(() => (tBondStats ? String(tBondStats.totalSupply) : null), [tBondStats]);
 
   const tombLpZap = useZap({ depositTokenName: 'LROAD-FTM-LP' });
-  const tshareLpZap = useZap({ depositTokenName: 'SHIELD-FTM-LP' });
-
-  const StyledLink = styled.a`
-    font-weight: 700;
-    text-decoration: none;
-  `;
+  const tshareLpZap = useZap({ depositTokenName: 'LCREAM-FTM-LP' });
 
   const [onPresentTombZap, onDissmissTombZap] = useModal(
     <ZapModal
@@ -138,7 +127,7 @@ const Home = () => {
         tshareLpZap.onZap(zappingToken, tokenName, amount);
         onDissmissTshareZap();
       }}
-      tokenName={'SHIELD-FTM-LP'}
+      tokenName={'LCREAM-FTM-LP'}
     />,
   );
 
@@ -154,17 +143,17 @@ const Home = () => {
         {/* Explanation text */}
         <Grid item xs={12} sm={8}>
           <Paper>
-            <Box p={4}>
+            <Box p={4} style={{paddingBottom: '20px'}}>
               <h1>Welcome to Lroad Finance</h1>
               <p>The most sustainable algorithmic stable coin on Fantom Opera, pegged to the price of 1 FTM via seigniorage.</p>
               <p>
-                Stake your LROAD-FTM LP in the Farm to earn SHIELD rewards.
-                Then stake your earned SHIELD in the Aegis to earn more LROAD!
+                Stake your LROAD-FTM LP in the Farm to earn LCREAM rewards.
+                Then stake your earned LCREAM in the Boardroom to earn more LROAD!
               </p>
               { isMStart && !isMOver ? 
-                <a href="/farm" style={{fontSize:"27px", fontWeight:"600"}}>Shield Reward Pools are live now!</a> : !isMStart ?
+                <a href="/farm" style={{fontSize:"27px", fontWeight:"600"}}>Lcream Reward Pools are live now!</a> : !isMStart ?
                 <div style={{display:'flex', fontSize:'20px'}}>
-                  Shield Reward Pools Launch In: <ProgressCountdown base={moment().toDate()} hideBar={true} deadline={mfrom} description="Pool Start" />
+                  Lcream Reward Pools Launch In: <ProgressCountdown base={moment().toDate()} hideBar={true} deadline={mfrom} description="Pool Start" />
                 </div> : null 
               }
               { isStart && !isOver ? 
@@ -173,37 +162,32 @@ const Home = () => {
                   Genesis Pools Launch In: <ProgressCountdown base={moment().toDate()} hideBar={true} deadline={from} description="Pool Start" />
                 </div> : null 
               }
+              <Grid item xs={12} sm={12} align="center">
+                <Button target="_blank" href="https://twitter.com/RoadLavender" style={{ margin: '15px 10px', marginBottom: '0', backgroundColor:'#1da1f2', padding:'10px 15px' }}>
+                  <img alt="twitter" src={TwitterImage} style={{marginRight:'10px'}}/>
+                  Twitter
+                </Button>
+                <Button target="_blank" href="https://discord.gg/pV2wSs7MK7" style={{ margin: '15px 10px', marginBottom: '0', background:'#5865f2', padding:'10px 15px' }}>
+                  <img alt="discord" src={DiscordImage} style={{marginRight:'10px', width: '18px'}}/>
+                  Discord
+                </Button>
+              </Grid>
             </Box>
           </Paper>
         </Grid>
 
         <Grid container spacing={3}>
           <Grid item  xs={12} sm={12} style={{ margin: '12px', display: 'flex' }}>
-            <Alert variant="filled" severity="warning" style={{width: '100%', background: '#664b55', padding: '12px 20px'}}>
-              <b> Please visit our <StyledLink target="_blank" href="https://lroad-finance88.gitbook.io/untitled/">documentation</StyledLink> before purchasing LROAD or SHIELD!</b>
+            <Alert variant="filled" severity="warning" style={{width: '100%', background: '#963d9f', padding: '12px 20px'}}>
+              <div> Do your own research before investing. Investing is risky and may result in monetary loss. Lavender Road is beta software and may contain bugs. By using Lavender Road, you agree that the Lavender Road team is not responsible for any financial losses from investing in Lavender Road.</div>
             </Alert>
         </Grid>
         </Grid>
 
-        <Grid item xs={12} sm={12} align="center">
-          <Button target="_blank" href="https://twitter.com/CaffeineFund" style={{ margin: '0 10px', backgroundColor:'#1da1f2', padding:'15px 30px' }}>
-            <img alt="twitter" src={TwitterImage} style={{marginRight:'10px'}}/>
-            Twitter
-          </Button>
-          <Button target="_blank" href="https://discord.gg/9BV3bTd646" style={{ margin: '0 10px', background:'#82713a', padding:'15px 30px'  }}>
-            <img alt="discord" src={TelegramImage} style={{marginRight:'10px', width: '18px'}}/>
-            Telegram
-          </Button>
-          <Button target="_blank" href="https://discord.gg/9BV3bTd646" style={{ margin: '0 10px', background:'#5865f2', padding:'15px 30px'  }}>
-            <img alt="discord" src={DiscordImage} style={{marginRight:'10px', width: '18px'}}/>
-            Discord
-          </Button>
-        </Grid>
-
         {/* TVL */}
         <Grid item xs={12} sm={4}>
-          <Card style={{ height:'125px' }}>
-            <CardContent align="center" style={{paddingTop:'26px'}}>
+          <Card>
+            <CardContent align="center">
               <h2>Total Value Locked</h2>
               <CountUp style={{ fontSize: '28px' }} end={TVL} separator="," prefix="$" />
             </CardContent>
@@ -213,31 +197,25 @@ const Home = () => {
         {/* Wallet */}
         <Grid item xs={12} sm={8}>
           <Card style={{ height: '100%' }}>
-            <CardContent align="center" style={{padding: '16px' }}>
-              <Button color="primary" href="/maegis" variant="contained" style={{marginRight : "10px", marginTop : "10px"}}>
+            <CardContent align="center" style={{padding: '32px' }}>
+              <Button color="primary" href="/boardroom" variant="contained" style={{marginRight : "10px", marginTop : "10px", padding:'10px 25px' }}>
                 Stake Now
               </Button>
-              <Button color="primary" target="_blank" href={buyTombAddress} variant="contained" style={{marginRight : "10px", marginTop : "10px"}}>
+              <Button color="primary" target="_blank" href={buyTombAddress} variant="contained" style={{marginRight : "10px", marginTop : "10px", padding:'10px 25px'}}>
                 Buy LROAD
               </Button>
-              <Button color="primary" variant="contained" target="_blank" href={`https://dexscreener.com/fantom/${tomb.address}`} style={{ marginRight: '10px', marginTop : "10px" }}>
-                LROAD Chart
-              </Button><br/>
-              <Button href="/farm" variant="contained" style={{marginRight : "10px", marginTop : "10px"}}>
+              <Button href="/farm" variant="contained" style={{marginRight : "10px", marginTop : "10px", padding:'10px 25px'}}>
                 Farm Now
               </Button>
-              <Button variant="contained" target="_blank" href={buyTShareAddress} style={{marginRight : "10px", marginTop : "10px"}}>
-                Buy SHIELD
-              </Button>
-              <Button variant="contained" target="_blank" href={`https://dexscreener.com/fantom/${tShare.address}`} style={{ marginRight: '10px', marginTop : "10px" }}>
-                SHIELD Chart
+              <Button variant="contained" target="_blank" href={buyTShareAddress} style={{marginRight : "10px", marginTop : "10px", padding:'10px 25px'}}>
+                Buy LCREAM
               </Button>
             </CardContent>
           </Card>
         </Grid>
 
         {/* LROAD */}
-        <Grid item xs={12} sm={4} style={{paddingRight: matches && '70px'}}>
+        <Grid item xs={12} sm={4}>
           <Card>
             <CardContent align="center" style={{ position: 'relative' }}>
               <h2>LROAD</h2>
@@ -247,7 +225,7 @@ const Home = () => {
                 }}
                 color="default"
                 variant="outlined"
-                style={{ position: 'absolute', top: '10px', right: '10px' }}
+                style={{ position: 'absolute', top: '10px', right: '20px', borderTopRightRadius: '20px', borderBottomLeftRadius: '20px' }}
               >
                 +&nbsp;
                 <img alt="metamask fox" style={{ width: '20px' }} src={MetamaskFox} />
@@ -275,25 +253,25 @@ const Home = () => {
           </Card>
         </Grid>
 
-        {/* SHIELD */}
-        <Grid item xs={12} sm={4} style={{padding: matches && '12px 35px'}}>
+        {/* LCREAM */}
+        <Grid item xs={12} sm={4}>
           <Card>
             <CardContent align="center" style={{ position: 'relative' }}>
-              <h2>SHIELD</h2>
+              <h2>LCREAM</h2>
               <Button
                 onClick={() => {
-                  tombFinance.watchAssetInMetamask('SHIELD');
+                  tombFinance.watchAssetInMetamask('LCREAM');
                 }}
                 color="default"
                 variant="outlined"
-                style={{ position: 'absolute', top: '10px', right: '10px' }}
+                style={{ position: 'absolute', top: '10px', right: '20px', borderTopRightRadius: '20px', borderBottomLeftRadius: '20px' }}
               >
                 +&nbsp;
                 <img alt="metamask fox" style={{ width: '20px' }} src={MetamaskFox} />
               </Button>
               <Box mt={2}>
                 <CardIcon>
-                  <TokenSymbol symbol="SHIELD" size={200}/>
+                  <TokenSymbol symbol="LCREAM" size={200}/>
                 </CardIcon>
               </Box>
               Current Price
@@ -313,7 +291,7 @@ const Home = () => {
         </Grid>
 
         {/* LBURGER */}
-        <Grid item xs={12} sm={4} style={{paddingLeft: matches && '70px'}}>
+        <Grid item xs={12} sm={4}>
           <Card>
             <CardContent align="center" style={{ position: 'relative' }}>
               <h2>LBURGER</h2>
@@ -323,7 +301,7 @@ const Home = () => {
                 }}
                 color="default"
                 variant="outlined"
-                style={{ position: 'absolute', top: '10px', right: '10px' }}
+                style={{ position: 'absolute', top: '10px', right: '20px', borderTopRightRadius: '20px', borderBottomLeftRadius: '20px' }}
               >
                 +&nbsp;
                 <img alt="metamask fox" style={{ width: '20px' }} src={MetamaskFox} />
@@ -355,7 +333,7 @@ const Home = () => {
               <h2>LROAD-FTM Spooky LP</h2>
               <Box mt={2}>
                 <CardIcon>
-                  <TokenSymbol symbol="LROAD-FTM-LP" size={250}/>
+                  <TokenSymbol symbol="LROAD-FTM-LP" size={200}/>
                 </CardIcon>
               </Box>
               <Box mt={2}>
@@ -380,10 +358,10 @@ const Home = () => {
         <Grid item xs={12} sm={6}>
           <Card>
             <CardContent align="center">
-              <h2>SHIELD-FTM Spooky LP</h2>
+              <h2>LCREAM-FTM Spooky LP</h2>
               <Box mt={2}>
                 <CardIcon>
-                  <TokenSymbol symbol="SHIELD-FTM-LP" size={250} />
+                  <TokenSymbol symbol="LCREAM-FTM-LP" size={200} />
                 </CardIcon>
               </Box>
               <Box mt={2}>
@@ -393,7 +371,7 @@ const Home = () => {
               </Box>
               <Box mt={2}>
                 <span style={{ fontSize: '29px' }}>
-                  {tshareLPStats?.tokenAmount ? tshareLPStats?.tokenAmount : '-.--'} SHIELD /{' '}
+                  {tshareLPStats?.tokenAmount ? tshareLPStats?.tokenAmount : '-.--'} LCREAM /{' '}
                   {tshareLPStats?.ftmAmount ? tshareLPStats?.ftmAmount : '-.--'} FTM
                 </span>
               </Box>

@@ -1,0 +1,16 @@
+/* .MuiPaper-root.MuiCard-root{
+    border-bottom-left-radius: 40px;
+    border-top-right-radius: 40px;
+} */
+.MuiPaper-root.MuiPaper-rounded{
+    border-bottom-left-radius: 40px;
+    border-top-right-radius: 40px;
+}
+.MuiPaper-root.MuiAlert-root{
+    border-bottom-left-radius: 30px;
+    border-top-right-radius: 30px;
+}
+.MuiButtonBase-root.MuiButton-root.MuiButton-contained, .MuiButtonBase-root.MuiButton-root.MuiButton-text{
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 15px;
+}

@@ -10,21 +10,21 @@ import tshareFtmLpLogo from '../../assets/img/tshare_ftm_lp.png';
 
 import wftmLogo from '../../assets/img/fantom-ftm-logo.png';
 import usdcLogo from '../../assets/img/USDC.png';
-import ethLogo from '../../assets/img/weth.png';
-import lroadshieldLogo from '../../assets/img/comet-meteor-lp.png';
+import daiLogo from '../../assets/img/dai.svg';
+import fusdtLogo from '../../assets/img/fusdt.svg';
 
 const logosBySymbol: { [title: string]: string } = {
   //Real tokens
   //=====================
   LROAD: tombLogo,
-  SHIELD: tShareLogo,
+  LCREAM: tShareLogo,
   LBURGER: tBondLogo,
   WFTM: wftmLogo,
   USDC: usdcLogo,
-  ETH: ethLogo,
+  DAI: daiLogo,
+  fUSDT: fusdtLogo,
   'LROAD-FTM-LP': tombFtmLpLogo,
-  'SHIELD-FTM-LP': tshareFtmLpLogo,
-  'LROAD-SHIELD-LP': lroadshieldLogo,
+  'LCREAM-FTM-LP': tshareFtmLpLogo,
 };
 
 type LogoProps = {

@@ -30,13 +30,12 @@ const CemeteryCard = ({ bank }) => {
                 height: '48px',
                 width: '48px',
                 borderRadius: '40px',
-                backgroundColor: 'white',
                 alignItems: 'center',
                 display: 'flex',
                 justifyContent: 'center',
               }}
             >
-              <TokenSymbol size={110} symbol={bank.depositTokenName} />
+              <TokenSymbol size={60} symbol={bank.depositTokenName} />
             </Box>
             <Typography variant="h5" component="h2">
               {bank.depositTokenName}

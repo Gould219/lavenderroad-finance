@@ -32,9 +32,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   appBar: {
-    'background-color': '#d8d8d8',
-    borderBottom: `1px solid ${theme.palette.divider}`,
-    padding: '10px 0',
+    'background-color': '#973e9c',
+    borderBottom: `1px solid #fff`,
+    padding: '5px 0',
     marginBottom: '3rem',
     zIndex: 2,
   },
@@ -50,9 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbar: {
     flexWrap: 'wrap',
-    borderTop: '2px solid #664a40',
-    borderBottom: '2px solid #664a40',
-    ['@media (min-width:1175px)']: { // eslint-disable-line no-useless-computed-key
+    ['@media (min-width:1223px)']: { // eslint-disable-line no-useless-computed-key
       justifyContent: 'space-between',
     }
   },
@@ -63,12 +61,13 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     textTransform: 'uppercase',
-    color: '#464545',
-    fontSize: '19px',
-    margin: theme.spacing(1, 2),
+    color: '#fff',
+    fontSize: '15px',
+    margin: '2px 8px',
     textDecoration: 'none',
     '&:hover': {
       textDecoration: 'none',
+      color: '#ecc5d1',
     },
   },
   brandLink: {
@@ -81,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Nav = () => {
-  const matches = useMediaQuery('(min-width:1175px)');
+  const matches = useMediaQuery('(min-width:1223px)');
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -99,22 +98,24 @@ const Nav = () => {
       <Toolbar className={classes.toolbar}>
         {matches ? (
           <>
-            <Grid style={{display:'flex', alignItems : 'center'}}>
+            
             {/* <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}> */}
               {/* <a className={ classes.brandLink } href="/">Lroad Finance</a> */}
               <Link to="/" color="inherit" className={classes.brandLink}>
-                <img src={Banner} alt='Lroad Finance Logo' width={500} height={80} style={{verticalAlign:'middle'}}/>
+                <img src={Banner} alt='Lroad Finance Logo' width={376} height={80} style={{verticalAlign:'middle'}}/>
               </Link>
+
+            <Grid style={{display:'flex', alignItems : 'center'}}>
             {/* </Typography> */}
-            <Box ml={3} style={{paddingTop:'20px'}}>
+            <Box mr={3}>
               <Link color="textPrimary" to="/" className={classes.link}>
                 Home
               </Link>
               <Link color="textPrimary" to="/farm" className={classes.link}>
-                Fortress
+                Farms
               </Link>
-              <Link color="textPrimary" to="/maegis" className={classes.link}>
-                Aegis
+              <Link color="textPrimary" to="/boardroom" className={classes.link}>
+                Boardroom
               </Link>
               <Link color="textPrimary" to="/bond" className={classes.link}>
                 Bond
@@ -134,10 +135,15 @@ const Nav = () => {
               <a href="https://lroad-finance88.gitbook.io/untitled/" target="_blank" rel="noopener noreferrer" className={classes.link}>
                 Docs
               </a>
+              <a href="https://dexscreener.com/fantom/0x6C954Ffa827EAC9e2A222d27B28591E1777736a1" target="_blank" rel="noopener noreferrer" className={classes.link}>
+                Lroad Chart
+              </a>
+              <a href="https://dexscreener.com/fantom/0x181794984bc4376348dca3a7989268c8aA734021" target="_blank" rel="noopener noreferrer" className={classes.link}>
+                Lcream Chart
+              </a>
             </Box>
-            </Grid>
-
             <AccountButton text="Connect" />
+            </Grid>
           </>
         ) : (
           <>
@@ -150,7 +156,7 @@ const Nav = () => {
             >
               <MenuIcon />
             </IconButton>
-            <img src={Banner} alt='Lroad Finance Logo' width={152} height={40} style={{verticalAlign:'middle'}}/>
+            <img src={Banner} alt='Lroad Finance Logo' width={258} height={55} style={{verticalAlign:'middle'}}/>
             {/* <Typography variant="h6" noWrap>
               Lroad Finance
             </Typography> */}
@@ -173,8 +179,8 @@ const Nav = () => {
               <Divider />
               <List>
                 <ListItemLink primary="Home" to="/" />
-                <ListItemLink primary="Fortress" to="/farm" />
-                <ListItemLink primary="Aegis" to="/maegis" />
+                <ListItemLink primary="Farms" to="/farm" />
+                <ListItemLink primary="Boardroom" to="/boardroom" />
                 <ListItemLink primary="Bond" to="/bond" />
                 {/* <ListItemLink primary="SBS" to="/sbs" />
                 <ListItemLink primary="Liquidity" to="/liquidity" />
@@ -183,8 +189,14 @@ const Nav = () => {
                   <ListItemText>Vaults</ListItemText>
                 </ListItem>
                  */}
-                <ListItem button component="a" href="https://lroad-finance88.gitbook.io/untitled/">
+                <ListItem button component="a" target="_blank" rel="noopener noreferrer" href="https://lroad-finance88.gitbook.io/untitled/">
                   <ListItemText>Docs</ListItemText>
+                </ListItem>
+                <ListItem button component="a" target="_blank" rel="noopener noreferrer" href="https://dexscreener.com/fantom/0x6C954Ffa827EAC9e2A222d27B28591E1777736a1">
+                  <ListItemText>LROAD Chart</ListItemText>
+                </ListItem>
+                <ListItem button component="a" target="_blank" rel="noopener noreferrer" href="https://dexscreener.com/fantom/0x181794984bc4376348dca3a7989268c8aA734021">
+                  <ListItemText>LCREAM Chart</ListItemText>
                 </ListItem>
                 <ListItem style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <AccountButton text="Connect" />

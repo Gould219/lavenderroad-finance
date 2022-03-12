@@ -65,14 +65,14 @@ const Masonry = () => {
       {!!account ? (
         <>
           <Typography color="textPrimary" align="center" variant="h3" gutterBottom>
-            Aegis
+            Boardroom
           </Typography>
           <Box mt={5}>
             <Grid container justifyContent="center" spacing={3}>
               <Grid item xs={12} md={2} lg={2} className={classes.gridItem}>
                 <Card className={classes.gridItem}>
                   <CardContent>
-                    <Typography style={{ textAlign: 'center', fontSize: '20px' }}>Next Epoch</Typography>
+                    <Typography style={{ textAlign: 'center', fontSize: '18px' }}>Next Epoch</Typography>
                     <ProgressCountdown base={moment().toDate()} hideBar={true} deadline={to} description="Next Epoch" />
                   </CardContent>
                 </Card>
@@ -80,8 +80,8 @@ const Masonry = () => {
               <Grid item xs={12} md={2} lg={2} className={classes.gridItem}>
                 <Card className={classes.gridItem}>
                   <CardContent align="center">
-                    <Typography style={{ fontSize: '20px' }}>Current Epoch</Typography>
-                    <Typography style={{ fontSize: '20px' }}>{Number(currentEpoch)}</Typography>
+                    <Typography style={{ fontSize: '18px' }}>Current Epoch</Typography>
+                    <Typography style={{ fontSize: '18px' }}>{Number(currentEpoch)}</Typography>
                   </CardContent>
                 </Card>
               </Grid>
@@ -91,23 +91,23 @@ const Masonry = () => {
                     <Typography style={{ fontSize: '15px' }}>
                       LROAD Price<small>(TWAP)</small>
                     </Typography>
-                    <Typography style={{ fontSize: '20px' }}>{scalingFactor}</Typography>
+                    <Typography style={{ fontSize: '18px' }}>{scalingFactor}</Typography>
                   </CardContent>
                 </Card>
               </Grid>
               <Grid item xs={12} md={2} lg={2} className={classes.gridItem}>
                 <Card className={classes.gridItem}>
                   <CardContent align="center">
-                    <Typography style={{ fontSize: '20px' }}>APR</Typography>
-                    <Typography style={{ fontSize: '20px' }}>{masonryAPR.toFixed(2)}%</Typography>
+                    <Typography style={{ fontSize: '18px' }}>APR</Typography>
+                    <Typography style={{ fontSize: '18px' }}>{masonryAPR.toFixed(2)}%</Typography>
                   </CardContent>
                 </Card>
               </Grid>
               <Grid item xs={12} md={2} lg={2}>
                 <Card className={classes.gridItem}>
                   <CardContent align="center">
-                    <Typography style={{ fontSize: '20px' }}>SHIELDS Staked</Typography>
-                    <Typography style={{ fontSize: '20px' }}>{getDisplayBalance(totalStaked)}</Typography>
+                    <Typography style={{ fontSize: '18px' }}>LCREAMS Staked</Typography>
+                    <Typography style={{ fontSize: '18px' }}>{getDisplayBalance(totalStaked)}</Typography>
                   </CardContent>
                 </Card>
               </Grid>
@@ -115,8 +115,8 @@ const Masonry = () => {
 
             <Grid container justifyContent="center">
               <Box mt={3} style={{ width: '600px' }}>
-                <Alert variant="filled" style={{background: '#664b55'}}>
-                  Staked SHIELDs can only be withdrawn after 6 epochs since deposit.
+                <Alert variant="filled" style={{background: '#963d9f'}}>
+                  Staked LCREAMs can only be withdrawn after 6 epochs since deposit.
                 </Alert>
               </Box>
             </Grid>

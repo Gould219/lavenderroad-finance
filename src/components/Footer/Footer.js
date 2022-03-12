@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Container, Grid, Typography, Link } from '@material-ui/core';
 import TwitterImage from '../../assets/img/twitter.svg';
 // import GithubImage from '../../assets/img/github.svg';
-import TelegramImage from '../../assets/img/telegram.svg';
+// import TelegramImage from '../../assets/img/telegram.svg';
 import DiscordImage from '../../assets/img/discord.svg';
 // import YoutubeImage from '../../assets/img/youtube.svg';
 
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: '15px',
     width: '100%',
     color: 'white',
-    backgroundColor: '#00000073',
+    backgroundColor: '#66418f',
     textAlign: 'center',
     height: '1.3rem',
     [theme.breakpoints.down('xs')]: {
@@ -52,7 +52,7 @@ const Footer = () => {
           </Grid>
           <Grid item xs={6} style={{ textAlign: 'right' }}>
             <a
-              href="https://twitter.com/LroadFinance88"
+              href="https://twitter.com/RoadLavender"
               rel="noopener noreferrer"
               target="_blank"
               className={classes.link}
@@ -69,7 +69,7 @@ const Footer = () => {
             </a>
             <a href="https://t.me/tombfinance" rel="noopener noreferrer" target="_blank" className={classes.link}>
               <img alt="telegram" src={TelegramImage} className={classes.img} />
-            </a> */}
+            </a>
             <a
               href="https://t.me/LroadFinanceANN"
               rel="noopener noreferrer"
@@ -78,7 +78,8 @@ const Footer = () => {
             >
               <img alt="telegram" src={TelegramImage} className={classes.img} />
             </a>
-            <a href="https://discord.gg/c6827VW6" rel="noopener noreferrer" target="_blank" className={classes.link}>
+             */}
+            <a href="https://discord.gg/pV2wSs7MK7" rel="noopener noreferrer" target="_blank" className={classes.link}>
               <img alt="discord" src={DiscordImage} className={classes.img} />
             </a>
           </Grid>

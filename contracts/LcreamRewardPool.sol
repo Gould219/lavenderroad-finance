@@ -567,9 +567,9 @@ library SafeERC20 {
 pragma solidity 0.6.12;
 
 
-// Note that this pool has no minter key of SHIELD (rewards).
-// Instead, the governance will call SHIELD distributeReward method and send reward to this pool at the beginning.
-contract ShieldRewardPool {
+// Note that this pool has no minter key of LCREAM (rewards).
+// Instead, the governance will call LCREAM distributeReward method and send reward to this pool at the beginning.
+contract LcreamRewardPool {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
@@ -585,13 +585,13 @@ contract ShieldRewardPool {
     // Info of each pool.
     struct PoolInfo {
         IERC20 token; // Address of LP token contract.
-        uint256 allocPoint; // How many allocation points assigned to this pool. SHIELDs to distribute per block.
-        uint256 lastRewardTime; // Last time that SHIELDs distribution occurs.
-        uint256 accShieldPerShare; // Accumulated SHIELDs per share, times 1e18. See below.
+        uint256 allocPoint; // How many allocation points assigned to this pool. LCREAMs to distribute per block.
+        uint256 lastRewardTime; // Last time that LCREAMs distribution occurs.
+        uint256 accLcreamPerShare; // Accumulated LCREAMs per share, times 1e18. See below.
         bool isStarted; // if lastRewardTime has passed
     }
 
-    IERC20 public shield;
+    IERC20 public lcream;
 
     // Info of each pool.
     PoolInfo[] public poolInfo;
@@ -602,15 +602,15 @@ contract ShieldRewardPool {
     // Total allocation points. Must be the sum of all allocation points in all pools.
     uint256 public totalAllocPoint = 0;
 
-    // The time when SHIELD mining starts.
+    // The time when LCREAM mining starts.
     uint256 public poolStartTime;
 
-    // The time when SHIELD mining ends.
+    // The time when LCREAM mining ends.
     uint256 public poolEndTime;
 
-    uint256 public ShieldPerSecond = 0.0041795267 ether; // 65000 shield / (180 days * 24h * 60min * 60s)
+    uint256 public LcreamPerSecond = 0.00382587448 ether; // 59500 lcream / (180 days * 24h * 60min * 60s)
     uint256 public runningTime = 180 days; // 180 days
-    uint256 public constant TOTAL_REWARDS = 65000 ether;
+    uint256 public constant TOTAL_REWARDS = 59500 ether;
 
     event Deposit(address indexed user, uint256 indexed pid, uint256 amount);
     event Withdraw(address indexed user, uint256 indexed pid, uint256 amount);
@@ -618,25 +618,25 @@ contract ShieldRewardPool {
     event RewardPaid(address indexed user, uint256 amount);
 
     constructor(
-        address _shield,
+        address _lcream,
         uint256 _poolStartTime
     ) public {
         require(block.timestamp < _poolStartTime, "late");
-        if (_shield != address(0)) shield = IERC20(_shield);
+        if (_lcream != address(0)) lcream = IERC20(_lcream);
         poolStartTime = _poolStartTime;
         poolEndTime = poolStartTime + runningTime;
         operator = msg.sender;
     }
 
     modifier onlyOperator() {
-        require(operator == msg.sender, "ShieldRewardPool: caller is not the operator");
+        require(operator == msg.sender, "LcreamRewardPool: caller is not the operator");
         _;
     }
 
     function checkPoolDuplicate(IERC20 _token) internal view {
         uint256 length = poolInfo.length;
         for (uint256 pid = 0; pid < length; ++pid) {
-            require(poolInfo[pid].token != _token, "ShieldRewardPool: existing pool?");
+            require(poolInfo[pid].token != _token, "LcreamRewardPool: existing pool?");
         }
     }
 
@@ -673,7 +673,7 @@ contract ShieldRewardPool {
             token : _token,
             allocPoint : _allocPoint,
             lastRewardTime : _lastRewardTime,
-            accShieldPerShare : 0,
+            accLcreamPerShare : 0,
             isStarted : _isStarted
             }));
         if (_isStarted) {
@@ -681,7 +681,7 @@ contract ShieldRewardPool {
         }
     }
 
-    // Update the given pool's SHIELD allocation point. Can only be called by the owner.
+    // Update the given pool's LCREAM allocation point. Can only be called by the owner.
     function set(uint256 _pid, uint256 _allocPoint) public onlyOperator {
         massUpdatePools();
         PoolInfo storage pool = poolInfo[_pid];
@@ -698,27 +698,27 @@ contract ShieldRewardPool {
         if (_fromTime >= _toTime) return 0;
         if (_toTime >= poolEndTime) {
             if (_fromTime >= poolEndTime) return 0;
-            if (_fromTime <= poolStartTime) return poolEndTime.sub(poolStartTime).mul(ShieldPerSecond);
-            return poolEndTime.sub(_fromTime).mul(ShieldPerSecond);
+            if (_fromTime <= poolStartTime) return poolEndTime.sub(poolStartTime).mul(LcreamPerSecond);
+            return poolEndTime.sub(_fromTime).mul(LcreamPerSecond);
         } else {
             if (_toTime <= poolStartTime) return 0;
-            if (_fromTime <= poolStartTime) return _toTime.sub(poolStartTime).mul(ShieldPerSecond);
-            return _toTime.sub(_fromTime).mul(ShieldPerSecond);
+            if (_fromTime <= poolStartTime) return _toTime.sub(poolStartTime).mul(LcreamPerSecond);
+            return _toTime.sub(_fromTime).mul(LcreamPerSecond);
         }
     }
 
-    // View function to see pending SHIELDs on frontend.
+    // View function to see pending LCREAMs on frontend.
     function pendingShare(uint256 _pid, address _user) external view returns (uint256) {
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][_user];
-        uint256 accShieldPerShare = pool.accShieldPerShare;
+        uint256 accLcreamPerShare = pool.accLcreamPerShare;
         uint256 tokenSupply = pool.token.balanceOf(address(this));
         if (block.timestamp > pool.lastRewardTime && tokenSupply != 0) {
             uint256 _generatedReward = getGeneratedReward(pool.lastRewardTime, block.timestamp);
-            uint256 _shieldReward = _generatedReward.mul(pool.allocPoint).div(totalAllocPoint);
-            accShieldPerShare = accShieldPerShare.add(_shieldReward.mul(1e18).div(tokenSupply));
+            uint256 _lcreamReward = _generatedReward.mul(pool.allocPoint).div(totalAllocPoint);
+            accLcreamPerShare = accLcreamPerShare.add(_lcreamReward.mul(1e18).div(tokenSupply));
         }
-        return user.amount.mul(accShieldPerShare).div(1e18).sub(user.rewardDebt);
+        return user.amount.mul(accLcreamPerShare).div(1e18).sub(user.rewardDebt);
     }
 
     // Update reward variables for all pools. Be careful of gas spending!
@@ -746,8 +746,8 @@ contract ShieldRewardPool {
         }
         if (totalAllocPoint > 0) {
             uint256 _generatedReward = getGeneratedReward(pool.lastRewardTime, block.timestamp);
-            uint256 _shieldReward = _generatedReward.mul(pool.allocPoint).div(totalAllocPoint);
-            pool.accShieldPerShare = pool.accShieldPerShare.add(_shieldReward.mul(1e18).div(tokenSupply));
+            uint256 _lcreamReward = _generatedReward.mul(pool.allocPoint).div(totalAllocPoint);
+            pool.accLcreamPerShare = pool.accLcreamPerShare.add(_lcreamReward.mul(1e18).div(tokenSupply));
         }
         pool.lastRewardTime = block.timestamp;
     }
@@ -759,9 +759,9 @@ contract ShieldRewardPool {
         UserInfo storage user = userInfo[_pid][_sender];
         updatePool(_pid);
         if (user.amount > 0) {
-            uint256 _pending = user.amount.mul(pool.accShieldPerShare).div(1e18).sub(user.rewardDebt);
+            uint256 _pending = user.amount.mul(pool.accLcreamPerShare).div(1e18).sub(user.rewardDebt);
             if (_pending > 0) {
-                safeShieldTransfer(_sender, _pending);
+                safeLcreamTransfer(_sender, _pending);
                 emit RewardPaid(_sender, _pending);
             }
         }
@@ -769,7 +769,7 @@ contract ShieldRewardPool {
             pool.token.safeTransferFrom(_sender, address(this), _amount);
             user.amount = user.amount.add(_amount);
         }
-        user.rewardDebt = user.amount.mul(pool.accShieldPerShare).div(1e18);
+        user.rewardDebt = user.amount.mul(pool.accLcreamPerShare).div(1e18);
         emit Deposit(_sender, _pid, _amount);
     }
 
@@ -780,16 +780,16 @@ contract ShieldRewardPool {
         UserInfo storage user = userInfo[_pid][_sender];
         require(user.amount >= _amount, "withdraw: not good");
         updatePool(_pid);
-        uint256 _pending = user.amount.mul(pool.accShieldPerShare).div(1e18).sub(user.rewardDebt);
+        uint256 _pending = user.amount.mul(pool.accLcreamPerShare).div(1e18).sub(user.rewardDebt);
         if (_pending > 0) {
-            safeShieldTransfer(_sender, _pending);
+            safeLcreamTransfer(_sender, _pending);
             emit RewardPaid(_sender, _pending);
         }
         if (_amount > 0) {
             user.amount = user.amount.sub(_amount);
             pool.token.safeTransfer(_sender, _amount);
         }
-        user.rewardDebt = user.amount.mul(pool.accShieldPerShare).div(1e18);
+        user.rewardDebt = user.amount.mul(pool.accLcreamPerShare).div(1e18);
         emit Withdraw(_sender, _pid, _amount);
     }
 
@@ -804,14 +804,14 @@ contract ShieldRewardPool {
         emit EmergencyWithdraw(msg.sender, _pid, _amount);
     }
 
-    // Safe shield transfer function, just in case if rounding error causes pool to not have enough SHIELDs.
-    function safeShieldTransfer(address _to, uint256 _amount) internal {
-        uint256 _shieldBal = shield.balanceOf(address(this));
-        if (_shieldBal > 0) {
-            if (_amount > _shieldBal) {
-                shield.safeTransfer(_to, _shieldBal);
+    // Safe lcream transfer function, just in case if rounding error causes pool to not have enough LCREAMs.
+    function safeLcreamTransfer(address _to, uint256 _amount) internal {
+        uint256 _lcreamBal = lcream.balanceOf(address(this));
+        if (_lcreamBal > 0) {
+            if (_amount > _lcreamBal) {
+                lcream.safeTransfer(_to, _lcreamBal);
             } else {
-                shield.safeTransfer(_to, _amount);
+                lcream.safeTransfer(_to, _amount);
             }
         }
     }
@@ -823,7 +823,7 @@ contract ShieldRewardPool {
     function governanceRecoverUnsupported(IERC20 _token, uint256 amount, address to) external onlyOperator {
         if (block.timestamp < poolEndTime + 90 days) {
             // do not allow to drain core token (SHIELD or lps) if less than 90 days after pool ends
-            require(_token != shield, "shield");
+            require(_token != lcream, "lcream");
             uint256 length = poolInfo.length;
             for (uint256 pid = 0; pid < length; ++pid) {
                 PoolInfo storage pool = poolInfo[pid];

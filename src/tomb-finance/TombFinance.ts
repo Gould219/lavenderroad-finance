@@ -29,7 +29,7 @@ export class TombFinance {
 
   LROADWFTM_LP: Contract;
   LROAD: ERC20;
-  SHIELD: ERC20;
+  LCREAM: ERC20;
   LBURGER: ERC20;
   FTM: ERC20;
 
@@ -47,7 +47,7 @@ export class TombFinance {
       this.externalTokens[symbol] = new ERC20(address, provider, symbol, decimal);
     }
     this.LROAD = new ERC20(deployments.tomb.address, provider, 'LROAD');
-    this.SHIELD = new ERC20(deployments.tShare.address, provider, 'SHIELD');
+    this.LCREAM = new ERC20(deployments.tShare.address, provider, 'LCREAM');
     this.LBURGER = new ERC20(deployments.tBond.address, provider, 'LBURGER');
     this.FTM = this.externalTokens['WFTM'];
 
@@ -69,7 +69,7 @@ export class TombFinance {
     for (const [name, contract] of Object.entries(this.contracts)) {
       this.contracts[name] = contract.connect(this.signer);
     }
-    const tokens = [this.LROAD, this.SHIELD, this.LBURGER, ...Object.values(this.externalTokens)];
+    const tokens = [this.LROAD, this.LCREAM, this.LBURGER, ...Object.values(this.externalTokens)];
     for (const token of tokens) {
       token.connect(this.signer);
     }
@@ -123,7 +123,7 @@ export class TombFinance {
     const lpToken = this.externalTokens[name];
     const lpTokenSupplyBN = await lpToken.totalSupply();
     const lpTokenSupply = getDisplayBalance(lpTokenSupplyBN, 18);
-    const token0 = name.startsWith('LROAD') ? this.LROAD : this.SHIELD;
+    const token0 = name.startsWith('LROAD') ? this.LROAD : this.LCREAM;
     const isTomb = name.startsWith('LROAD');
     const tokenAmountBN = await token0.balanceOf(lpToken.address);
     const tokenAmount = getDisplayBalance(tokenAmountBN, 18);
@@ -176,12 +176,12 @@ export class TombFinance {
    * CirculatingSupply (always equal to total supply for bonds)
    */
   async getShareStat(): Promise<TokenStat> {
-    const { LroadFtmLPShieldRewardPool } = this.contracts;
+    const { LroadFtmLPLcreamRewardPool } = this.contracts;
 
-    const supply = await this.SHIELD.totalSupply();
+    const supply = await this.LCREAM.totalSupply();
 
-    const priceInFTM = await this.getTokenPriceFromPancakeswap(this.SHIELD);
-    const tombRewardPoolSupply = await this.SHIELD.balanceOf(LroadFtmLPShieldRewardPool.address);
+    const priceInFTM = await this.getTokenPriceFromPancakeswap(this.LCREAM);
+    const tombRewardPoolSupply = await this.LCREAM.balanceOf(LroadFtmLPLcreamRewardPool.address);
     const tShareCirculatingSupply = supply.sub(tombRewardPoolSupply);
     const priceOfOneFTM = await this.getWFTMPriceFromPancakeswap();
     const priceOfSharesInDollars = (Number(priceInFTM) * Number(priceOfOneFTM)).toFixed(2);
@@ -189,8 +189,8 @@ export class TombFinance {
     return {
       tokenInFtm: priceInFTM,
       priceInDollars: priceOfSharesInDollars,
-      totalSupply: getDisplayBalance(supply, this.SHIELD.decimal, 0),
-      circulatingSupply: getDisplayBalance(tShareCirculatingSupply, this.SHIELD.decimal, 0),
+      totalSupply: getDisplayBalance(supply, this.LCREAM.decimal, 0),
+      circulatingSupply: getDisplayBalance(tShareCirculatingSupply, this.LCREAM.decimal, 0),
     };
   }
 
@@ -271,11 +271,13 @@ export class TombFinance {
       if (!contractName.endsWith('LroadRewardPool')) {
         const rewardPerSecond = await poolContract.lroadPerSecond();
         if (depositTokenName === 'WFTM') {
-          return rewardPerSecond.mul(3500).div(10000);
+          return rewardPerSecond.mul(2500).div(10000);
         } else if (depositTokenName === 'USDC') {
-          return rewardPerSecond.mul(3500).div(10000);
-        } else if (depositTokenName === 'ETH') {
-          return rewardPerSecond.mul(3000).div(10000);
+          return rewardPerSecond.mul(2500).div(10000);
+        } else if (depositTokenName === 'fUSDT') {
+          return rewardPerSecond.mul(2500).div(10000);
+        } else if (depositTokenName === 'DAI') {
+          return rewardPerSecond.mul(2500).div(10000);
         }
         return rewardPerSecond;
       }
@@ -287,7 +289,7 @@ export class TombFinance {
       }
       return await poolContract.epochLroadPerSecond(0);
     }
-    const rewardPerSecond = await poolContract.ShieldPerSecond();
+    const rewardPerSecond = await poolContract.LcreamPerSecond();
     if (depositTokenName.startsWith('LROAD')) {
       return rewardPerSecond.mul(6000).div(10000);
     } else {
@@ -311,10 +313,10 @@ export class TombFinance {
     } else {
       if (tokenName === 'LROAD-FTM-LP') {
         tokenPrice = await this.getLPTokenPrice(token, this.LROAD, true);
-      } else if (tokenName === 'SHIELD-FTM-LP') {
-        tokenPrice = await this.getLPTokenPrice(token, this.SHIELD, false);
-      } else if (tokenName === 'LROAD-SHIELD-LP') {
-        tokenPrice = await this.getLPTokenPrice(token, this.SHIELD, false);
+      } else if (tokenName === 'LCREAM-FTM-LP') {
+        tokenPrice = await this.getLPTokenPrice(token, this.LCREAM, false);
+      } else if (tokenName === 'LROAD-LCREAM-LP') {
+        tokenPrice = await this.getLPTokenPrice(token, this.LCREAM, false);
       } else {
         tokenPrice = await this.getTokenPriceFromPancakeswap(token);
         tokenPrice = (Number(tokenPrice) * Number(priceOfOneFtmInDollars)).toString();
@@ -371,8 +373,8 @@ export class TombFinance {
     }
 
     const TSHAREPrice = (await this.getShareStat()).priceInDollars;
-    const masonrytShareBalanceOf = await this.SHIELD.balanceOf(this.currentMasonry().address);
-    const masonryTVL = Number(getDisplayBalance(masonrytShareBalanceOf, this.SHIELD.decimal)) * Number(TSHAREPrice);
+    const masonrytShareBalanceOf = await this.LCREAM.balanceOf(this.currentMasonry().address);
+    const masonryTVL = Number(getDisplayBalance(masonrytShareBalanceOf, this.LCREAM.decimal)) * Number(TSHAREPrice);
 
     return totalValue + masonryTVL;
   }
@@ -558,8 +560,8 @@ export class TombFinance {
     const epochRewardsPerShare = lastRewardsReceived / 1e18;
     //Mgod formula
     const amountOfRewardsPerDay = epochRewardsPerShare * Number(TOMBPrice) * 4;
-    const masonrytShareBalanceOf = await this.SHIELD.balanceOf(Masonry.address);
-    const masonryTVL = Number(getDisplayBalance(masonrytShareBalanceOf, this.SHIELD.decimal)) * Number(TSHAREPrice);
+    const masonrytShareBalanceOf = await this.LCREAM.balanceOf(Masonry.address);
+    const masonryTVL = Number(getDisplayBalance(masonrytShareBalanceOf, this.LCREAM.decimal)) * Number(TSHAREPrice);
     const realAPR = ((amountOfRewardsPerDay * 100) / masonryTVL) * 365;
     return realAPR;
   }
@@ -581,7 +583,7 @@ export class TombFinance {
     const Masonry = this.currentMasonry();
     const canWithdraw = await Masonry.canWithdraw(this.myAccount);
     const stakedAmount = await this.getStakedSharesOnMasonry();
-    const notStaked = Number(getDisplayBalance(stakedAmount, this.SHIELD.decimal)) === 0;
+    const notStaked = Number(getDisplayBalance(stakedAmount, this.LCREAM.decimal)) === 0;
     const result = notStaked ? true : canWithdraw;
     return result;
   }
@@ -658,10 +660,10 @@ export class TombFinance {
     return { from: startAllocation, to: endAllocation };
   }
 
-  async getShieldPoolStartAndEndTime(): Promise<AllocationTime> {
-    const { ShieldFtmLPShieldRewardPool } = this.contracts;
-    const startTimestamp: BigNumber = await ShieldFtmLPShieldRewardPool.poolStartTime();
-    const endTimestamp: BigNumber = await ShieldFtmLPShieldRewardPool.poolEndTime();
+  async getLcreamPoolStartAndEndTime(): Promise<AllocationTime> {
+    const { LcreamFtmLPLcreamRewardPool } = this.contracts;
+    const startTimestamp: BigNumber = await LcreamFtmLPLcreamRewardPool.poolStartTime();
+    const endTimestamp: BigNumber = await LcreamFtmLPLcreamRewardPool.poolEndTime();
     const startAllocation = new Date(startTimestamp.mul(1000).toNumber());
     const endAllocation = new Date(endTimestamp.mul(1000).toNumber());
 
@@ -741,13 +743,13 @@ export class TombFinance {
       let assetUrl;
       if (assetName === 'LROAD') {
         asset = this.LROAD;
-        assetUrl = 'https://raw.githubusercontent.com/krypto-dev/lroad-finance-assets/main/crypto_tomb_cash-svg.png';
-      } else if (assetName === 'SHIELD') {
-        asset = this.SHIELD;
-        assetUrl = 'https://raw.githubusercontent.com/krypto-dev/lroad-finance-assets/main/crypto_tomb_share-svg.png';
+        assetUrl = 'https://lavenderroad.finance/lroad.svg';
+      } else if (assetName === 'LCREAM') {
+        asset = this.LCREAM;
+        assetUrl = 'https://lavenderroad.finance/lcream.svg';
       } else if (assetName === 'LBURGER') {
         asset = this.LBURGER;
-        assetUrl = 'https://raw.githubusercontent.com/krypto-dev/lroad-finance-assets/main/crypto_tomb_bond-svg.png';
+        assetUrl = 'https://lavenderroad.finance/lburger.svg';
       }
       await ethereum.request({
         method: 'wallet_watchAsset',
@@ -865,7 +867,7 @@ export class TombFinance {
     if (tokenName === FTM_TICKER) {
       estimate = await zapper.estimateZapIn(lpToken.address, SPOOKY_ROUTER_ADDR, parseUnits(amount, 18));
     } else {
-      const token = tokenName === TOMB_TICKER ? this.LROAD : this.SHIELD;
+      const token = tokenName === TOMB_TICKER ? this.LROAD : this.LCREAM;
       estimate = await zapper.estimateZapInToken(
         token.address,
         lpToken.address,
@@ -884,7 +886,7 @@ export class TombFinance {
       };
       return await zapper.zapIn(lpToken.address, SPOOKY_ROUTER_ADDR, this.myAccount, overrides);
     } else {
-      const token = tokenName === TOMB_TICKER ? this.LROAD : this.SHIELD;
+      const token = tokenName === TOMB_TICKER ? this.LROAD : this.LCREAM;
       return await zapper.zapInToken(
         token.address,
         parseUnits(amount, 18),
@@ -896,21 +898,21 @@ export class TombFinance {
   }
   async swapTBondToTShare(tbondAmount: BigNumber): Promise<TransactionResponse> {
     const { TShareSwapper } = this.contracts;
-    return await TShareSwapper.swapLburgerToShield(tbondAmount);
+    return await TShareSwapper.swapLburgerToLcream(tbondAmount);
   }
-  async estimateAmountOfShield(tbondAmount: string): Promise<string> {
+  async estimateAmountOfLcream(tbondAmount: string): Promise<string> {
     const { TShareSwapper } = this.contracts;
     try {
-      const estimateBN = await TShareSwapper.estimateAmountOfShield(parseUnits(tbondAmount, 18));
+      const estimateBN = await TShareSwapper.estimateAmountOfLcream(parseUnits(tbondAmount, 18));
       return getDisplayBalance(estimateBN, 18, 6);
     } catch (err) {
-      console.error(`Failed to fetch estimate shield amount: ${err}`);
+      console.error(`Failed to fetch estimate lcream amount: ${err}`);
     }
   }
 
   async getTShareSwapperStat(address: string): Promise<TShareSwapperStat> {
     const { TShareSwapper } = this.contracts;
-    const tshareBalanceBN = await TShareSwapper.getShieldBalance();
+    const tshareBalanceBN = await TShareSwapper.getLcreamBalance();
     const tbondBalanceBN = await TShareSwapper.getLburgerBalance(address);
     // const tombPriceBN = await TShareSwapper.getLroadPrice();
     // const tsharePriceBN = await TShareSwapper.getTSharePrice();

@@ -24,9 +24,6 @@ const BackgroundImage = createGlobalStyle`
     background: url(${PitImage}) no-repeat !important;
     background-size: cover !important;
   }
-  p, b, span{
-    font-size: 20px;
-  }
 `;
 
 const Pit: React.FC = () => {
