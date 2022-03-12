@@ -132,7 +132,7 @@ const Nav = () => {
               <Link color="textPrimary" to="/regulations" className={classes.link}>
                 Regulations
               </Link> */}
-              <a href="https://lroad-finance88.gitbook.io/untitled/" target="_blank" rel="noopener noreferrer" className={classes.link}>
+              <a href="https://ctillerlvx.gitbook.io/lavender-road/" target="_blank" rel="noopener noreferrer" className={classes.link}>
                 Docs
               </a>
               <a href="https://dexscreener.com/fantom/0x6C954Ffa827EAC9e2A222d27B28591E1777736a1" target="_blank" rel="noopener noreferrer" className={classes.link}>
@@ -189,7 +189,7 @@ const Nav = () => {
                   <ListItemText>Vaults</ListItemText>
                 </ListItem>
                  */}
-                <ListItem button component="a" target="_blank" rel="noopener noreferrer" href="https://lroad-finance88.gitbook.io/untitled/">
+                <ListItem button component="a" target="_blank" rel="noopener noreferrer" href="https://ctillerlvx.gitbook.io/lavender-road/">
                   <ListItemText>Docs</ListItemText>
                 </ListItem>
                 <ListItem button component="a" target="_blank" rel="noopener noreferrer" href="https://dexscreener.com/fantom/0x6C954Ffa827EAC9e2A222d27B28591E1777736a1">

@@ -95,7 +95,7 @@ const Cemetery = () => {
                       <div>All below pools have ended. Please unstake and collect your rewards.</div> : 
                       <>
                         Pools starting at {from.toUTCString()} and will run for 2 days with a 1% deposit fee.<br/>
-                        <div style={{display:'flex'}}>Time until genesis pools end: <ProgressCountdown base={moment().toDate()} hideBar={true} deadline={to} description="End Pool" />. Please refer to &nbsp;<a target="_blank" href="https://lroad-finance88.gitbook.io/untitled/" rel="noopener noreferrer">documentation</a>&nbsp; docs to understand our protocol's fee model.</div>
+                        <div style={{display:'flex'}}>Time until genesis pools end: <ProgressCountdown base={moment().toDate()} hideBar={true} deadline={to} description="End Pool" />. Please refer to &nbsp;<a target="_blank" href="https://ctillerlvx.gitbook.io/lavender-road/" rel="noopener noreferrer">documentation</a>&nbsp; docs to understand our protocol's fee model.</div>
                       </>
                     }
                   </Alert>
