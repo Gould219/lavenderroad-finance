@@ -31,7 +31,7 @@ const newTheme = createTheme({
   },
   typography: {
     color: '#d151de',
-    fontFamily: ['"Spectral"', 'sans-serif'].join(','),
+    fontFamily: ['"Rosarivo"', 'sans-serif'].join(','),
   },
 });
 

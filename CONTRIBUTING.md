@@ -1,8 +1,8 @@
-# Contributing to [LroadFiance.io](https://lroadfinance.io)
+# Contributing to [LroadFiance.io](https://lavenderroad.finance)
 
 🎉 First off all, thanks for taking the time to contribute! 🎉
 
-Following is a set of guidelines for contributing to the `LroadFinance.io` website. These are mostly guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a pull request.
+Following is a set of guidelines for contributing to the `lavenderroad.finance` website. These are mostly guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a pull request.
 
 ## Code of Conduct
 
