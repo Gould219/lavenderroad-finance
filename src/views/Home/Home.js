@@ -49,9 +49,9 @@ const Home = () => {
   const tShareStats = usetShareStats();
   const tBondStats = useBondStats();
   const tombFinance = useTombFinance();
-  const { from, to } = useGenesisPoolAllocationTimes();
+  const { wfrom, from, to } = useGenesisPoolAllocationTimes();
   const { from: mfrom, to: mto } = useLcreamPoolAllocationTimes();
-  const isStart = Date.now() >= from.getTime();
+  const isStart = Date.now() >= wfrom.getTime();
   const isOver = Date.now() >= to.getTime();
   const isMStart = Date.now() >= mfrom.getTime();
   const isMOver = Date.now() >= mto.getTime();
@@ -150,16 +150,16 @@ const Home = () => {
                 Stake your LROAD-FTM LP in the Farm to earn LCREAM rewards.
                 Then stake your earned LCREAM in the Boardroom to earn more LROAD!
               </p>
+              { isStart && !isOver ? 
+                <a href="/farm" style={{fontSize:"27px", fontWeight:"600"}}>Genesis Pools are live now!</a> : !isStart ?
+                <div style={{display:'flex', fontSize:'20px'}}>
+                  Genesis Pools Launch In: <ProgressCountdown base={moment().toDate()} hideBar={true} deadline={wfrom} description="Pool Start" /> (<ProgressCountdown base={moment().toDate()} hideBar={true} deadline={from} description="Pool Start" />	&nbsp; For WL Users)
+                </div> : null 
+              }
               { isMStart && !isMOver ? 
                 <a href="/farm" style={{fontSize:"27px", fontWeight:"600"}}>Lcream Reward Pools are live now!</a> : !isMStart ?
                 <div style={{display:'flex', fontSize:'20px'}}>
                   Lcream Reward Pools Launch In: <ProgressCountdown base={moment().toDate()} hideBar={true} deadline={mfrom} description="Pool Start" />
-                </div> : null 
-              }
-              { isStart && !isOver ? 
-                <a href="/farm" style={{fontSize:"27px", fontWeight:"600"}}>Genesis Pools are live now!</a> : !isStart ?
-                <div style={{display:'flex', fontSize:'20px'}}>
-                  Genesis Pools Launch In: <ProgressCountdown base={moment().toDate()} hideBar={true} deadline={from} description="Pool Start" />
                 </div> : null 
               }
               <Grid item xs={12} sm={12} align="center">

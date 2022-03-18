@@ -48,13 +48,14 @@ const CemeteryCard = ({ bank }) => {
               Earn: <span style={{color: '#00bcd4', fontWeight:'700'}}>{bank.earnTokenName.toUpperCase()} </span>
             </Typography>
             <Typography color="textSecondary">
+              Multiplier: <span style={{color: '#00bcd4', fontWeight:'700'}}>{bank.multiplier}</span>
+            </Typography>
+            <Typography color="textSecondary">
               Daily APR: <span style={{color: '#00bcd4', fontWeight:'700'}}>{bank.closedForStaking || bank.genesisFinished ? '0.00' : statsOnPool?.dailyAPR}%</span>
             </Typography>
-            {!bank.depositTokenName.endsWith('LP') && 
-              <Typography color="textSecondary">
-                Deposit Fee: <span style={{color: '#00bcd4', fontWeight:'700'}}>1%</span>
-              </Typography>
-            }
+            <Typography color="textSecondary">
+              Deposit Fee: <span style={{color: '#00bcd4', fontWeight:'700'}}>{bank.depositFee}</span>
+            </Typography>
           </Box>
         </CardContent>
         <CardActions style={{ justifyContent: 'flex-end' }}>

@@ -63,6 +63,20 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
   finished: will disable the pool on the UI if set to true
   sort: the order of the pool
   */
+ 
+  LroadFtmLpRewardPool: {
+    name: 'Earn LROAD by LROAD-FTM LP',
+    poolId: 4,
+    sectionInUI: 0,
+    contract: 'LroadFtmLpRewardPool',
+    depositTokenName: 'LROAD-FTM-LP',
+    earnTokenName: 'LROAD',
+    finished: false,
+    sort: 0,
+    closedForStaking: false,
+    depositFee: '1%',
+    multiplier: '10X',
+  },
   LroadFtmRewardPool: {
     name: 'Earn LROAD by FTM',
     poolId: 0,
@@ -73,6 +87,8 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     finished: false,
     sort: 1,
     closedForStaking: false,
+    depositFee: '1%',
+    multiplier: '20X',
   },
   LroadUsdcRewardPool: {
     name: 'Earn LROAD by USDC',
@@ -84,6 +100,8 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     finished: false,
     sort: 2,
     closedForStaking: false,
+    depositFee: '1%',
+    multiplier: '25X',
   },
   LroadfusdtRewardPool: {
     name: 'Earn LROAD by fUSDT',
@@ -95,6 +113,8 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     finished: false,
     sort: 3,
     closedForStaking: false,
+    depositFee: '1%',
+    multiplier: '25X',
   },
   LroaddaiRewardPool: {
     name: 'Earn LROAD by DAI',
@@ -106,6 +126,8 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     finished: false,
     sort: 4,
     closedForStaking: false,
+    depositFee: '1%',
+    multiplier: '20X',
   },
   LroadFtmLPLcreamRewardPool: {
     name: 'Earn LCREAM by LROAD-FTM LP',
@@ -117,6 +139,8 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     finished: false,
     sort: 5,
     closedForStaking: false,
+    depositFee: '0%',
+    multiplier: '60X',
   },
   LcreamFtmLPLcreamRewardPool: {
     name: 'Earn LCREAM by LCREAM-FTM LP',
@@ -128,6 +152,8 @@ export const bankDefinitions: { [contractName: string]: BankInfo } = {
     finished: false,
     sort: 6,
     closedForStaking: false,
+    depositFee: '0%',
+    multiplier: '40X',
   },
   // LroadLcreamLPLcreamRewardPool: {
   //   name: 'Earn LCREAM by LROAD-LCREAM LP',

@@ -271,13 +271,15 @@ export class TombFinance {
       if (!contractName.endsWith('LroadRewardPool')) {
         const rewardPerSecond = await poolContract.lroadPerSecond();
         if (depositTokenName === 'WFTM') {
-          return rewardPerSecond.mul(2500).div(10000);
+          return rewardPerSecond.mul(2000).div(10000);
         } else if (depositTokenName === 'USDC') {
           return rewardPerSecond.mul(2500).div(10000);
         } else if (depositTokenName === 'fUSDT') {
           return rewardPerSecond.mul(2500).div(10000);
         } else if (depositTokenName === 'DAI') {
-          return rewardPerSecond.mul(2500).div(10000);
+          return rewardPerSecond.mul(2000).div(10000);
+        } else if (depositTokenName === 'LROAD-FTM-LP') {
+          return rewardPerSecond.mul(1000).div(10000);
         }
         return rewardPerSecond;
       }
@@ -656,8 +658,9 @@ export class TombFinance {
     const endTimestamp: BigNumber = await LroadFtmRewardPool.poolEndTime();
     const startAllocation = new Date(startTimestamp.mul(1000).toNumber());
     const endAllocation = new Date(endTimestamp.mul(1000).toNumber());
+    const wstartAllocation = new Date((startTimestamp.add(10800)).mul(1000).toNumber())
 
-    return { from: startAllocation, to: endAllocation };
+    return { wfrom: wstartAllocation, from: startAllocation, to: endAllocation };
   }
 
   async getLcreamPoolStartAndEndTime(): Promise<AllocationTime> {

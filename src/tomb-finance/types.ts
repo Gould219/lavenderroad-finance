@@ -12,6 +12,8 @@ export interface BankInfo {
   sort: number;
   finished: boolean;
   closedForStaking: boolean;
+  depositFee: string;
+  multiplier: string;
 }
 
 export interface Bank extends BankInfo {
@@ -42,6 +44,7 @@ export type LPStat = {
 };
 
 export type AllocationTime = {
+  wfrom?: Date;
   from: Date;
   to: Date;
 };

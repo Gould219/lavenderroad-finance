@@ -27,10 +27,11 @@ const Cemetery = () => {
   const [banks] = useBanks();
   const { path } = useRouteMatch();
   const { account } = useWallet();
-  const { from, to } = useGenesisPoolAllocationTimes();
+  const { wfrom, from, to } = useGenesisPoolAllocationTimes();
   const { from:mfrom } = useLcreamPoolAllocationTimes();
   const isOver = Date.now() >= to.getTime();
-  const isStart = Date.now() >= mfrom.getTime();
+  const isStart = Date.now() >= wfrom.getTime();
+  const isMstart = Date.now() >= mfrom.getTime();
   const activeBanks = banks.filter((bank) => !bank.finished);
   return (
     <Switch>
@@ -49,7 +50,7 @@ const Cemetery = () => {
                     Earn LCREAM by staking LP
                   </Typography>
                   <Alert variant="filled" style={{background: '#963d9f', padding:'12px 20px', fontSize:'16px'}}>
-                    {isStart ? 
+                    {isMstart ? 
                       <div>Pools are live now, Stake LPs to earn more LCREAM, No deposit fee</div> : 
                       <>
                         Pools starting at {mfrom.toUTCString()}, No deposit fee.<br/>
@@ -95,7 +96,8 @@ const Cemetery = () => {
                       <div>All below pools have ended. Please unstake and collect your rewards.</div> : 
                       <>
                         Pools starting at {from.toUTCString()} and will run for 2 days with a 1% deposit fee.<br/>
-                        <div style={{display:'flex'}}>Time until genesis pools end: <ProgressCountdown base={moment().toDate()} hideBar={true} deadline={to} description="End Pool" />. Please refer to &nbsp;<a target="_blank" href="https://ctillerlvx.gitbook.io/lavender-road/" rel="noopener noreferrer">documentation</a>&nbsp; docs to understand our protocol's fee model.</div>
+                        <div style={{display:'flex'}}>{isStart ? 'Time until genesis pools end: ' :  'Time until genesis pools start in: ' }&nbsp;<ProgressCountdown base={moment().toDate()} hideBar={true} deadline={isStart ? to : wfrom} description="End Pool" /> {!isStart && (<>(<ProgressCountdown base={moment().toDate()} hideBar={true} deadline={from} description="End Pool" />&nbsp; For WL Users)</>)}. </div>
+                        <div>Please refer to &nbsp;<a target="_blank" href="https://guardian-finance.gitbook.io/guardian-finance/" rel="noopener noreferrer">documentation</a>&nbsp; docs to understand our protocol's fee model.</div>
                       </>
                     }
                   </Alert>

@@ -7,6 +7,7 @@ import useRefresh from './useRefresh';
 const useGenesisPoolAllocationTimes = () => {
   const { slowRefresh } = useRefresh();
   const [time, setTime] = useState<AllocationTime>({
+    wfrom: new Date(),
     from: new Date(),
     to: new Date(),
   });
